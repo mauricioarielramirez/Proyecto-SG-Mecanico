@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/03/2018 21:15:53 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico" table="CORREOELECTRONICO">
+        <id name="idCorreoElectronico" type="java.lang.Long">
+            <column name="IDCORREOELECTRONICO" />
+            <generator class="assigned" />
+        </id>
+        <property name="direccion" type="java.lang.String">
+            <column name="DIRECCION" />
+        </property>
+    </class>
+</hibernate-mapping>

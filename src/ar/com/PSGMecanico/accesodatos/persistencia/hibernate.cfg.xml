@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-<!--  Trabajar online 
-Trabajar offline
-<!DOCTYPE hibernate-configuration SYSTEM "classpath://org/hibernate/hibernate-configuration-3.0.dtd">  -->
+
+<!-- Trabajar offline -->
+<!--  <!DOCTYPE hibernate-configuration SYSTEM "classpath://org/hibernate/hibernate-configuration-3.0.dtd">--> 
 <hibernate-configuration>
- <session-factory>
+ <session-factory name="">
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">linuxalpoder</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/escuelabd</property>
+  <property name="hibernate.connection.password">SGMproyecto</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/SGMecanico</property>
   <property name="hibernate.connection.username">root</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.search.autoregister_listeners">false</property>
   <property name="hibernate.validator.apply_to_ddl">false</property>
-  <!-- Configuración POOL c3p0 -->
-  <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
   <property name="hibernate.c3p0.acquire_increment">5</property>
   <property name="hibernate.c3p0.idle_test_period">100</property>
   <property name="hibernate.c3p0.max_size">70</property>
@@ -22,51 +20,10 @@ Trabajar offline
   <property name="hibernate.c3p0.min_size">10</property>
   <property name="hibernate.c3p0.timeout">180</property>
   <property name="hibernate.generate_statistics">false</property>
-  <!-- Mapeos -->
-  <!-- <mapping class="ar.com.santalucia.dominio.modelo.usuarios.Usuario" resource="ar/com/santalucia/dominio/modelo/usuarios/Usuario.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.usuarios.Alumno" resource="ar/com/santalucia/dominio/modelo/usuarios/Alumno.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Telefono" resource="ar/com/PSGMecanico/modelo/dominio/persona/Telefono.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Direccion" resource="ar/com/PSGMecanico/modelo/dominio/persona/Direccion.hbm.xml"/>
   <mapping
-   class="ar.com.santalucia.dominio.modelo.usuarios.Administrador" resource="ar/com/santalucia/dominio/modelo/usuarios/Administrador.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.usuarios.info.Mail" resource="ar/com/santalucia/dominio/modelo/usuarios/info/Mail.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.usuarios.info.Titulo" resource="ar/com/santalucia/dominio/modelo/usuarios/info/Titulo.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.usuarios.info.Telefono" resource="ar/com/santalucia/dominio/modelo/usuarios/info/Telefono.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.usuarios.info.Domicilio" resource="ar/com/santalucia/dominio/modelo/usuarios/info/Domicilio.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.academico.Anio" resource="ar/com/santalucia/dominio/modelo/academico/Anio.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.academico.Curso" resource="ar/com/santalucia/dominio/modelo/academico/Curso.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.academico.Inscripcion" resource="ar/com/santalucia/dominio/modelo/academico/Inscripcion.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.academico.Llamado" resource="ar/com/santalucia/dominio/modelo/academico/Llamado.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.academico.Materia" resource="ar/com/santalucia/dominio/modelo/academico/Materia.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.academico.Mesa" resource="ar/com/santalucia/dominio/modelo/academico/Mesa.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.academico.MesaExamenHist" resource="ar/com/santalucia/dominio/modelo/academico/MesaExamenHist.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.desempenio.Nota" resource="ar/com/santalucia/dominio/modelo/desempenio/Nota.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.desempenio.Trimestre" resource="ar/com/santalucia/dominio/modelo/desempenio/Trimestre.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.desempenio.BoletinNotas" resource="ar/com/santalucia/dominio/modelo/desempenio/BoletinNotas.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.desempenio.Inasistencia" resource="ar/com/santalucia/dominio/modelo/desempenio/Inasistencia.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.desempenio.BoletinInasistencias" resource="ar/com/santalucia/dominio/modelo/desempenio/BoletinInasistencias.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.academico.Area" resource="ar/com/santalucia/dominio/modelo/academico/Area.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.usuarios.Personal" resource="ar/com/santalucia/dominio/modelo/usuarios/Personal.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.sistema.login.Login" resource="ar/com/santalucia/dominio/modelo/sistema/login/Login.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.aulavirtual.AulaVirtual" resource="ar/com/santalucia/dominio/modelo/aulavirtual/AulaVirtual.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.aulavirtual.ConfiguracionEntrega" resource="ar/com/santalucia/dominio/modelo/aulavirtual/ConfiguracionEntrega.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.aulavirtual.Entrega" resource="ar/com/santalucia/dominio/modelo/aulavirtual/Entrega.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.aulavirtual.Muro" resource="ar/com/santalucia/dominio/modelo/aulavirtual/Muro.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.aulavirtual.Publicacion" resource="ar/com/santalucia/dominio/modelo/aulavirtual/Publicacion.hbm.xml"/>
-  <mapping class="ar.com.santalucia.dominio.modelo.aulavirtual.Recurso" resource="ar/com/santalucia/dominio/modelo/aulavirtual/Recurso.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.desempenio.BoletinNotasHist" resource="ar/com/santalucia/dominio/modelo/desempenio/BoletinNotasHist.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.academico.MateriaHist" resource="ar/com/santalucia/dominio/modelo/academico/MateriaHist.hbm.xml"/>
-  <mapping
-   class="ar.com.santalucia.dominio.modelo.desempenio.MateriaNotasBoletin" resource="ar/com/santalucia/dominio/modelo/desempenio/MateriaNotasBoletin.hbm.xml"/> -->
+   class="ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico" resource="ar/com/PSGMecanico/modelo/dominio/persona/CorreoElectronico.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Persona" resource="ar/com/PSGMecanico/modelo/dominio/persona/Persona.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

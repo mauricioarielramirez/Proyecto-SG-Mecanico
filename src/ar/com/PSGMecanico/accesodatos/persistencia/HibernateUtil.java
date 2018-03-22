@@ -9,6 +9,7 @@ import org.hibernate.context.internal.ThreadLocalSessionContext;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+@SuppressWarnings({ "unused", "deprecation" })
 public class HibernateUtil {
 	
     private static SessionFactory sessionFactory;

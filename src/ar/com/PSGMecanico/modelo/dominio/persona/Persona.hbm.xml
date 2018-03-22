@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/03/2018 21:15:53 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.PSGMecanico.modelo.dominio.persona.Persona" table="PERSONA">
+        <id name="idPersona" type="java.lang.Long">
+            <column name="IDPERSONA" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="java.lang.String">
+            <column name="NOMBRE" />
+        </property>
+        <property name="apellido" type="java.lang.String">
+            <column name="APELLIDO" />
+        </property>
+        <property name="nroDni" type="java.lang.Long">
+            <column name="NRODNI" />
+        </property>
+        <property name="codCuil" type="java.lang.Long">
+            <column name="CODCUIL" />
+        </property>
+        <property name="codCuit" type="java.lang.Long">
+            <column name="CODCUIT" />
+        </property>
+        <set name="telefonos" table="TELEFONO" inverse="false" lazy="true">
+            <key>
+                <column name="IDPERSONA" />
+            </key>
+            <one-to-many class="ar.com.PSGMecanico.modelo.dominio.persona.Telefono" />
+        </set>
+        <set name="direcciones" table="DIRECCION" inverse="false" lazy="true">
+            <key>
+                <column name="IDPERSONA" />
+            </key>
+            <one-to-many class="ar.com.PSGMecanico.modelo.dominio.persona.Direccion" />
+        </set>
+        <set name="correos" table="CORREOELECTRONICO" inverse="false" lazy="true">
+            <key>
+                <column name="IDPERSONA" />
+            </key>
+            <one-to-many class="ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico" />
+        </set>
+        <property name="rol" type="java.lang.String">
+            <column name="ROL" />
+        </property>
+    </class>
+</hibernate-mapping>
