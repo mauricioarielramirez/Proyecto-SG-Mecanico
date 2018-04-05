@@ -25,5 +25,9 @@
   <mapping
    class="ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico" resource="ar/com/PSGMecanico/modelo/dominio/persona/CorreoElectronico.hbm.xml"/>
   <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Persona" resource="ar/com/PSGMecanico/modelo/dominio/persona/Persona.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Trabajo.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Vehiculo" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Vehiculo.hbm.xml"/>
+
+
  </session-factory>
 </hibernate-configuration>

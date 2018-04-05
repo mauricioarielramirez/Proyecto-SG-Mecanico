@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-abr-2018 22:13:05 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.PSGMecanico.modelo.dominio.trabajo.Vehiculo" table="VEHICULO">
+        <id name="idVehiculo" type="java.lang.Long">
+            <column name="IDVEHICULO" />
+            <generator class="assigned" />
+        </id>
+        <property name="motor" type="java.lang.String">
+            <column name="MOTOR" />
+        </property>
+        <property name="patente" type="java.lang.String">
+            <column name="PATENTE" />
+        </property>
+        <property name="marca" type="java.lang.String">
+            <column name="MARCA" />
+        </property>
+        <property name="modelo" type="java.lang.String">
+            <column name="MODELO" />
+        </property>
+        <property name="tipo" type="java.lang.String">
+            <column name="TIPO" />
+        </property>
+    </class>
+</hibernate-mapping>
