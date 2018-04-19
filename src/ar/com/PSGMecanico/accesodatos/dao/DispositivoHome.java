@@ -1,5 +1,5 @@
 package ar.com.PSGMecanico.accesodatos.dao;
-// Generated 21/03/2018 21:26:43 by Hibernate Tools 4.0.1.Final
+// Generated 17-abr-2018 8:09:33 by Hibernate Tools 4.0.1.Final
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -9,16 +9,16 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
+import ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo;
 
 /**
- * Home object for domain model class CorreoElectronico.
- * @see ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico
+ * Home object for domain model class Dispositivo.
+ * @see ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo
  * @author Hibernate Tools
  */
-public class CorreoElectronicoHome {
+public class DispositivoHome {
 
-	private static final Log log = LogFactory.getLog(CorreoElectronicoHome.class);
+	private static final Log log = LogFactory.getLog(DispositivoHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -31,8 +31,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public void persist(CorreoElectronico transientInstance) {
-		log.debug("persisting CorreoElectronico instance");
+	public void persist(Dispositivo transientInstance) {
+		log.debug("persisting Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -42,8 +42,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public void attachDirty(CorreoElectronico instance) {
-		log.debug("attaching dirty CorreoElectronico instance");
+	public void attachDirty(Dispositivo instance) {
+		log.debug("attaching dirty Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -53,9 +53,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
-	public void attachClean(CorreoElectronico instance) {
-		log.debug("attaching clean CorreoElectronico instance");
+	public void attachClean(Dispositivo instance) {
+		log.debug("attaching clean Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -65,8 +64,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public void delete(CorreoElectronico persistentInstance) {
-		log.debug("deleting CorreoElectronico instance");
+	public void delete(Dispositivo persistentInstance) {
+		log.debug("deleting Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -76,10 +75,10 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public CorreoElectronico merge(CorreoElectronico detachedInstance) {
-		log.debug("merging CorreoElectronico instance");
+	public Dispositivo merge(Dispositivo detachedInstance) {
+		log.debug("merging Dispositivo instance");
 		try {
-			CorreoElectronico result = (CorreoElectronico) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Dispositivo result = (Dispositivo) sessionFactory.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -88,11 +87,11 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public CorreoElectronico findById(java.lang.Long id) {
-		log.debug("getting CorreoElectronico instance with id: " + id);
+	public Dispositivo findById(java.lang.Long id) {
+		log.debug("getting Dispositivo instance with id: " + id);
 		try {
-			CorreoElectronico instance = (CorreoElectronico) sessionFactory.getCurrentSession()
-					.get("ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico", id);
+			Dispositivo instance = (Dispositivo) sessionFactory.getCurrentSession()
+					.get("ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -105,11 +104,11 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public List findByExample(CorreoElectronico instance) {
-		log.debug("finding CorreoElectronico instance by example");
+	public List findByExample(Dispositivo instance) {
+		log.debug("finding Dispositivo instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico")
+					.createCriteria("ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;

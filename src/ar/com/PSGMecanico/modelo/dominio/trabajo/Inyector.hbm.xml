@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-abr-2018 21:00:48 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.PSGMecanico.modelo.dominio.trabajo.Inyector" table="INYECTOR">
+        <id name="idInyector" type="java.lang.Long">
+            <column name="IDINYECTOR" />
+            <generator class="assigned" />
+        </id>
+        <property name="orden" type="java.lang.Long">
+            <column name="ORDEN" />
+        </property>
+        <property name="codigo" type="java.lang.Long">
+            <column name="CODIGO" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18-abr-2018 21:01:13 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.PSGMecanico.modelo.dominio.pago.Pago" table="PAGO">
+        <id name="idPago" type="java.lang.Long">
+            <column name="IDPAGO" />
+            <generator class="assigned" />
+        </id>
+        <property name="idTrabajo" type="java.lang.Long">
+            <column name="IDTRABAJO" />
+        </property>
+        <property name="fecha" type="java.util.Date">
+            <column name="FECHA" />
+        </property>
+        <property name="montoTotal" type="java.lang.Double">
+            <column name="MONTOTOTAL" />
+        </property>
+        <property name="detalle" type="java.lang.String">
+            <column name="DETALLE" />
+        </property>
+        <property name="estadoPago" type="java.lang.String">
+            <column name="ESTADOPAGO" />
+        </property>
+    </class>
+</hibernate-mapping>

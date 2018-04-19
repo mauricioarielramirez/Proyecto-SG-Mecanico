@@ -20,14 +20,18 @@
   <property name="hibernate.c3p0.min_size">10</property>
   <property name="hibernate.c3p0.timeout">180</property>
   <property name="hibernate.generate_statistics">false</property>
-  <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Telefono" resource="ar/com/PSGMecanico/modelo/dominio/persona/Telefono.hbm.xml"/>
+    <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Telefono" resource="ar/com/PSGMecanico/modelo/dominio/persona/Telefono.hbm.xml"/>
   <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Direccion" resource="ar/com/PSGMecanico/modelo/dominio/persona/Direccion.hbm.xml"/>
   <mapping
    class="ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico" resource="ar/com/PSGMecanico/modelo/dominio/persona/CorreoElectronico.hbm.xml"/>
   <mapping class="ar.com.PSGMecanico.modelo.dominio.persona.Persona" resource="ar/com/PSGMecanico/modelo/dominio/persona/Persona.hbm.xml"/>
   <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Trabajo.hbm.xml"/>
   <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Vehiculo" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Vehiculo.hbm.xml"/>
-
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Descripcion" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Descripcion.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Dispositivo.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.trabajo.Inyector" resource="ar/com/PSGMecanico/modelo/dominio/trabajo/Inyector.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.pago.Pago" resource="ar/com/PSGMecanico/modelo/dominio/pago/Pago.hbm.xml"/>
+  <mapping class="ar.com.PSGMecanico.modelo.dominio.pago.PagoParciales" resource="ar/com/PSGMecanico/modelo/dominio/pago/PagoParciales.hbm.xml"/>
 
  </session-factory>
 </hibernate-configuration>

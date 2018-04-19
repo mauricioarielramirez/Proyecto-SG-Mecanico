@@ -1,5 +1,5 @@
 package ar.com.PSGMecanico.accesodatos.dao;
-// Generated 21/03/2018 21:26:43 by Hibernate Tools 4.0.1.Final
+// Generated 18-abr-2018 21:02:12 by Hibernate Tools 4.0.1.Final
 
 import java.util.List;
 import javax.naming.InitialContext;
@@ -9,16 +9,16 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
+import ar.com.PSGMecanico.modelo.dominio.pago.Pago;
 
 /**
- * Home object for domain model class CorreoElectronico.
- * @see ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico
+ * Home object for domain model class Pago.
+ * @see ar.com.PSGMecanico.modelo.dominio.pago.Pago
  * @author Hibernate Tools
  */
-public class CorreoElectronicoHome {
+public class PagoHome {
 
-	private static final Log log = LogFactory.getLog(CorreoElectronicoHome.class);
+	private static final Log log = LogFactory.getLog(PagoHome.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -31,8 +31,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public void persist(CorreoElectronico transientInstance) {
-		log.debug("persisting CorreoElectronico instance");
+	public void persist(Pago transientInstance) {
+		log.debug("persisting Pago instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -42,8 +42,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public void attachDirty(CorreoElectronico instance) {
-		log.debug("attaching dirty CorreoElectronico instance");
+	public void attachDirty(Pago instance) {
+		log.debug("attaching dirty Pago instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -53,9 +53,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
-	public void attachClean(CorreoElectronico instance) {
-		log.debug("attaching clean CorreoElectronico instance");
+	public void attachClean(Pago instance) {
+		log.debug("attaching clean Pago instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -65,8 +64,8 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public void delete(CorreoElectronico persistentInstance) {
-		log.debug("deleting CorreoElectronico instance");
+	public void delete(Pago persistentInstance) {
+		log.debug("deleting Pago instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -76,10 +75,10 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public CorreoElectronico merge(CorreoElectronico detachedInstance) {
-		log.debug("merging CorreoElectronico instance");
+	public Pago merge(Pago detachedInstance) {
+		log.debug("merging Pago instance");
 		try {
-			CorreoElectronico result = (CorreoElectronico) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Pago result = (Pago) sessionFactory.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -88,11 +87,11 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public CorreoElectronico findById(java.lang.Long id) {
-		log.debug("getting CorreoElectronico instance with id: " + id);
+	public Pago findById(java.lang.Long id) {
+		log.debug("getting Pago instance with id: " + id);
 		try {
-			CorreoElectronico instance = (CorreoElectronico) sessionFactory.getCurrentSession()
-					.get("ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico", id);
+			Pago instance = (Pago) sessionFactory.getCurrentSession().get("ar.com.PSGMecanico.modelo.dominio.pago.Pago",
+					id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -105,12 +104,11 @@ public class CorreoElectronicoHome {
 		}
 	}
 
-	public List findByExample(CorreoElectronico instance) {
-		log.debug("finding CorreoElectronico instance by example");
+	public List findByExample(Pago instance) {
+		log.debug("finding Pago instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico")
-					.add(Example.create(instance)).list();
+					.createCriteria("ar.com.PSGMecanico.modelo.dominio.pago.Pago").add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18-abr-2018 21:01:13 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ar.com.PSGMecanico.modelo.dominio.pago.PagoParciales" table="PAGOPARCIALES">
+        <id name="idPagoParcial" type="java.lang.Long">
+            <column name="IDPAGOPARCIAL" />
+            <generator class="assigned" />
+        </id>
+        <property name="monto" type="java.lang.Double">
+            <column name="MONTO" />
+        </property>
+        <property name="fecha" type="java.util.Date">
+            <column name="FECHA" />
+        </property>
+        <property name="formaPago" type="java.lang.String">
+            <column name="FORMAPAGO" />
+        </property>
+    </class>
+</hibernate-mapping>
