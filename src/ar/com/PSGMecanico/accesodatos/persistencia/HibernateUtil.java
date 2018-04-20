@@ -17,7 +17,7 @@ public class HibernateUtil {
     public static synchronized void buildSessionFactory() {
         if (sessionFactory == null) {
             Configuration configuration = new Configuration();
-            configuration.configure("/ar/com/santalucia/accesodatos/persistencia/hibernate.cfg.xml");
+            configuration.configure("/ar/com/PSGMecanico/accesodatos/persistencia/hibernate.cfg.xml");
             configuration.setProperty("hibernate.current_session_context_class", "thread");
            ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
