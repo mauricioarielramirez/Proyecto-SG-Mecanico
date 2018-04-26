@@ -22,6 +22,8 @@ public class PruebasDeDao {
 		trabajo.setFecha(Calendar.getInstance().getTime());
 		trabajo.setEstadoTrabajo("Realizado");
 		trabajo.setKmVehiculo(15L);
+		trabajo.setIdPersonaRetira(1L);
+		trabajo.setIdPersona(1L);
 		
 		try {
 			gTrabajo.add(trabajo);

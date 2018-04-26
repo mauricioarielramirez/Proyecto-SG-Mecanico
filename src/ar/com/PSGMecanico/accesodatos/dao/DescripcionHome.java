@@ -9,6 +9,7 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
+import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
 import ar.com.PSGMecanico.modelo.dominio.trabajo.Descripcion;
 
 /**
@@ -20,7 +21,7 @@ public class DescripcionHome {
 
 	private static final Log log = LogFactory.getLog(DescripcionHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
 		try {
