@@ -5,4 +5,20 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 
+<navigation-rule>
+	<from-view-id>prueba.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>Welcome</from-outcome>
+		<to-view-id>views/bienvenido.xhtml</to-view-id>
+	</navigation-case>
+	
+</navigation-rule>
+
+<navigation-rule>
+    <from-view-id>bienvenido.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>altaTrabajo</from-outcome>
+		<to-view-id>views/altaTrabajos.xhtml</to-view-id>
+	</navigation-case>
+</navigation-rule>
 </faces-config>

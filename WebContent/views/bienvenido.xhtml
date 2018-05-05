@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h3>Menu del usuario:  #{user.name} </h3>
+	
+	<h:form>
+		<!-- tal es mejor usar reglas de naveacion y no la ruta de la vista -->
+		<h:commandLink action="/prueba" value="Salir" />
+		<br />
+		<h:commandLink action="altaTrabajos" value="Alta de nuevo trabajo" />
+	</h:form>	
+		
+</body> 
+</html>

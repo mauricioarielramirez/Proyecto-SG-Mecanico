@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h1> Alta de trabajos!</h1>
+	<h:form>
+	    <h3>Ingreso los datos de un trabajo </h3>
+	    <table>
+	    <tr>	
+	    	<td>Id de trabajo:</td>
+	    	<td><h:inputText value="#{altaTrabajo.idPersona}"/></td>
+	    </tr>
+	   <tr>	
+	    	<td>Dueño del vehiculo:</td>
+	    	<td><h:inputText value="#{altaTrabajo.idPersona}"/></td>
+	    </tr>
+	    
+	    <tr>
+	    	<td>Estado:</td>
+	    	<td><h:inputText value="#{altaTrabajo.estadoTrabajo}"/></td>
+	    </tr>	  
+	    <tr>
+	    	<td>Kms del vehiculo:</td>
+	    	<td><h:inputText value="#{altaTrabajo.kmVehiculo}"/></td>
+	    </tr>
+	    <tr>	
+	    	<td>Persona que retira el trabajo:</td>
+	    	<td><h:inputText value="#{altaTrabajo.idPersonaRetira}"/></td>
+	    </tr>	    	      
+	    <tr>
+	    	<td><h:commandButton  value="Entra" action ="#{altaTrabajo.addTrabajo()}"/></td>
+	    </tr>
+	    </table>
+	</h:form>
+</body> 
+</html>
