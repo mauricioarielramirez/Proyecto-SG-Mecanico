@@ -24,7 +24,7 @@ public GestorTrabajo() throws Exception {
 			trabajoDAO.persist((Trabajo)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el DOMICILIO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar el TRABAJO: " + ex.getMessage());
 		}
 	}
 

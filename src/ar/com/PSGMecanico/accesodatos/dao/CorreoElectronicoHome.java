@@ -9,6 +9,7 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
+import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
 import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
 
 /**
@@ -20,7 +21,7 @@ public class CorreoElectronicoHome {
 
 	private static final Log log = LogFactory.getLog(CorreoElectronicoHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
 		try {
