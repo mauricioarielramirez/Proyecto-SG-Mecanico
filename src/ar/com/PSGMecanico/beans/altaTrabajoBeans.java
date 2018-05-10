@@ -39,15 +39,16 @@ public class altaTrabajoBeans implements Serializable{
 			try {
 				 gTrabajo = new GestorTrabajo();
 			}catch (Exception ex){
-				
+				System.out.println("EL ERROR");
 			};			
 			//cargamos los datos de trabajo
 			Trabajo trabajo = new Trabajo();
-			trabajo.setIdTrabajo(2L);
+			trabajo.setIdTrabajo(idTrabajo);
 			trabajo.setFecha(Calendar.getInstance().getTime());
-			trabajo.setEstadoTrabajo("Prueba");
-			trabajo.setKmVehiculo(3000L);
-			
+			trabajo.setEstadoTrabajo(estadoTrabajo);
+			trabajo.setKmVehiculo(kmVehiculo);
+			trabajo.setIdPersona(idPersona);
+			trabajo.setIdPersonaRetira(idPersonaRetira);
 			
 			
 			try {
