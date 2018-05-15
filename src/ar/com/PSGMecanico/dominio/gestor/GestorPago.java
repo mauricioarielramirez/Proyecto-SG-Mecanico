@@ -2,17 +2,17 @@ package ar.com.PSGMecanico.dominio.gestor;
 
 import java.util.ArrayList;
 
-import ar.com.PSGMecanico.accesodatos.dao.TrabajoHome;
+import ar.com.PSGMecanico.accesodatos.dao.PagoHome;
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
-import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
+import ar.com.PSGMecanico.modelo.dominio.pago.Pago;
 
-public class GestorTrabajo extends Gestor<Trabajo> {
-private TrabajoHome trabajoDAO;
+public class GestorPago extends Gestor<Pago> {
+private PagoHome pagoDAO;
 
-public GestorTrabajo() throws Exception {
+public GestorPago() throws Exception {
 	try {
 		sesionDeHilo = HibernateUtil.getSessionFactory().getCurrentSession();
-		trabajoDAO = new TrabajoHome();
+		pagoDAO = new PagoHome();
 	} catch (Exception ex) {
 		throw new Exception("Ha ocurrido un problema al inicializar el gestor: " + ex.getMessage());
 	}
@@ -23,10 +23,10 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.persist((Trabajo)object);
+			pagoDAO.persist((Pago)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar el PAGO: " + ex.getMessage());
 		}
 	}
 
@@ -35,10 +35,10 @@ public GestorTrabajo() throws Exception {
 		try {
 		setSession();
 		setTransaction();
-		trabajoDAO.attachDirty((Trabajo)object);
+		pagoDAO.attachDirty((Pago)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Ha ocurrido un problema al modificar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al modificar el PAGO: " + ex.getMessage());
 		}
 	}
 
@@ -47,10 +47,10 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.delete((Trabajo)object);
+			pagoDAO.delete((Pago)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al eliminar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al eliminar el PAGO: " + ex.getMessage());
 		}
 		
 	}
@@ -60,12 +60,12 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			Trabajo trabajo = new Trabajo();
-			trabajo = trabajoDAO.findById(id);
+			Pago trabajo = new Pago();
+			trabajo = pagoDAO.findById(id);
 			return trabajo;
 		} catch (Exception ex) {
 			closeSession();
-			throw new Exception("Ha ocurrido un error al buscar el TRABAJO por su ID: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un error al buscar el PAGO por su ID: " + ex.getMessage());
 		}
 	}
 	
@@ -74,13 +74,13 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			ArrayList<Trabajo> listaTrabajo = (ArrayList<Trabajo>) trabajoDAO.findByExample((Trabajo) example);
+			ArrayList<Pago> listaPago = (ArrayList<Pago>) pagoDAO.findByExample((Pago) example);
 			sesionDeHilo.getTransaction().commit();
-			return listaTrabajo;
+			return listaPago;
 		} catch (Exception ex) {
 			closeSession();
 			throw new Exception(
-					"Ha ocurrido un error al buscar TRABAJOS que coincidan con el ejemplo dado: " + ex.getMessage());
+					"Ha ocurrido un error al buscar PAGOS que coincidan con el ejemplo dado: " + ex.getMessage());
 		}
 	}
 	

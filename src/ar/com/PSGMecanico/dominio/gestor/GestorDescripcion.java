@@ -2,17 +2,17 @@ package ar.com.PSGMecanico.dominio.gestor;
 
 import java.util.ArrayList;
 
-import ar.com.PSGMecanico.accesodatos.dao.TrabajoHome;
+import ar.com.PSGMecanico.accesodatos.dao.DescripcionHome;
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
-import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
+import ar.com.PSGMecanico.modelo.dominio.trabajo.Descripcion;
 
-public class GestorTrabajo extends Gestor<Trabajo> {
-private TrabajoHome trabajoDAO;
+public class GestorDescripcion extends Gestor<Descripcion> {
+private DescripcionHome descripcionDAO;
 
-public GestorTrabajo() throws Exception {
+public GestorDescripcion() throws Exception {
 	try {
 		sesionDeHilo = HibernateUtil.getSessionFactory().getCurrentSession();
-		trabajoDAO = new TrabajoHome();
+		descripcionDAO = new DescripcionHome();
 	} catch (Exception ex) {
 		throw new Exception("Ha ocurrido un problema al inicializar el gestor: " + ex.getMessage());
 	}
@@ -23,7 +23,7 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.persist((Trabajo)object);
+			descripcionDAO.persist((Descripcion)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
 			throw new Exception("Ha ocurrido un problema al agregar el TRABAJO: " + ex.getMessage());
@@ -35,7 +35,7 @@ public GestorTrabajo() throws Exception {
 		try {
 		setSession();
 		setTransaction();
-		trabajoDAO.attachDirty((Trabajo)object);
+		descripcionDAO.attachDirty((Descripcion)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
 			throw new Exception("Ha ocurrido un problema al modificar el TRABAJO: " + ex.getMessage());
@@ -47,7 +47,7 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.delete((Trabajo)object);
+			descripcionDAO.delete((Descripcion)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
 			throw new Exception("Ha ocurrido un problema al eliminar el TRABAJO: " + ex.getMessage());
@@ -60,8 +60,8 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			Trabajo trabajo = new Trabajo();
-			trabajo = trabajoDAO.findById(id);
+			Descripcion trabajo = new Descripcion();
+			trabajo = descripcionDAO.findById(id);
 			return trabajo;
 		} catch (Exception ex) {
 			closeSession();
@@ -74,9 +74,9 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			ArrayList<Trabajo> listaTrabajo = (ArrayList<Trabajo>) trabajoDAO.findByExample((Trabajo) example);
+			ArrayList<Descripcion> listaDescripcion = (ArrayList<Descripcion>) descripcionDAO.findByExample((Descripcion) example);
 			sesionDeHilo.getTransaction().commit();
-			return listaTrabajo;
+			return listaDescripcion;
 		} catch (Exception ex) {
 			closeSession();
 			throw new Exception(

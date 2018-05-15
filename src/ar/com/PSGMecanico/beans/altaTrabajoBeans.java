@@ -10,6 +10,7 @@ import java.util.Date;
 
 import ar.com.PSGMecanico.dominio.gestor.GestorTrabajo;
 import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
+import ar.com.PSGMecanico.servicio.ServicioTrabajo;
 
 /**
  * 
@@ -34,10 +35,12 @@ public class altaTrabajoBeans implements Serializable{
 		String result = "";
 		
 					
-			// Llamos al gestor de trabajo
-			GestorTrabajo gTrabajo = null;
+			//Llamos al gestor de trabajo
+			//GestorTrabajo gTrabajo = null;
+			ServicioTrabajo sTrabajo = null;
 			try {
-				 gTrabajo = new GestorTrabajo();
+				 //gTrabajo = new GestorTrabajo();
+				sTrabajo = new ServicioTrabajo();
 			}catch (Exception ex){
 				System.out.println("EL ERROR");
 			};			
@@ -53,7 +56,9 @@ public class altaTrabajoBeans implements Serializable{
 			
 			try {
 				//Se realiza el alta y devuelve la regla de navegacion
-				gTrabajo.add(trabajo);
+				//gTrabajo.add(trabajo);
+				
+				sTrabajo.agregarTrabajo(trabajo);
 				
 			} catch (Exception e) {
 				// Se captura el error devuleve a pagina de "error"

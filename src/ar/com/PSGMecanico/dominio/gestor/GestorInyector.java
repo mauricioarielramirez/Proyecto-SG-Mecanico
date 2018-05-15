@@ -2,17 +2,17 @@ package ar.com.PSGMecanico.dominio.gestor;
 
 import java.util.ArrayList;
 
-import ar.com.PSGMecanico.accesodatos.dao.TrabajoHome;
+import ar.com.PSGMecanico.accesodatos.dao.InyectorHome;
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
-import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
+import ar.com.PSGMecanico.modelo.dominio.trabajo.Inyector;
 
-public class GestorTrabajo extends Gestor<Trabajo> {
-private TrabajoHome trabajoDAO;
+public class GestorInyector extends Gestor<Inyector> {
+private InyectorHome inyectorDAO;
 
-public GestorTrabajo() throws Exception {
+public GestorInyector() throws Exception {
 	try {
 		sesionDeHilo = HibernateUtil.getSessionFactory().getCurrentSession();
-		trabajoDAO = new TrabajoHome();
+		inyectorDAO = new InyectorHome();
 	} catch (Exception ex) {
 		throw new Exception("Ha ocurrido un problema al inicializar el gestor: " + ex.getMessage());
 	}
@@ -23,10 +23,10 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.persist((Trabajo)object);
+			inyectorDAO.persist((Inyector)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar el INYECTOR: " + ex.getMessage());
 		}
 	}
 
@@ -35,10 +35,10 @@ public GestorTrabajo() throws Exception {
 		try {
 		setSession();
 		setTransaction();
-		trabajoDAO.attachDirty((Trabajo)object);
+		inyectorDAO.attachDirty((Inyector)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Ha ocurrido un problema al modificar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al modificar el INYECTOR: " + ex.getMessage());
 		}
 	}
 
@@ -47,10 +47,10 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.delete((Trabajo)object);
+			inyectorDAO.delete((Inyector)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al eliminar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al eliminar el INYECTOR: " + ex.getMessage());
 		}
 		
 	}
@@ -60,12 +60,12 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			Trabajo trabajo = new Trabajo();
-			trabajo = trabajoDAO.findById(id);
+			Inyector trabajo = new Inyector();
+			trabajo = inyectorDAO.findById(id);
 			return trabajo;
 		} catch (Exception ex) {
 			closeSession();
-			throw new Exception("Ha ocurrido un error al buscar el TRABAJO por su ID: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un error al buscar el INYECTOR por su ID: " + ex.getMessage());
 		}
 	}
 	
@@ -74,13 +74,13 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			ArrayList<Trabajo> listaTrabajo = (ArrayList<Trabajo>) trabajoDAO.findByExample((Trabajo) example);
+			ArrayList<Inyector> listaInyector = (ArrayList<Inyector>) inyectorDAO.findByExample((Inyector) example);
 			sesionDeHilo.getTransaction().commit();
-			return listaTrabajo;
+			return listaInyector;
 		} catch (Exception ex) {
 			closeSession();
 			throw new Exception(
-					"Ha ocurrido un error al buscar TRABAJOS que coincidan con el ejemplo dado: " + ex.getMessage());
+					"Ha ocurrido un error al buscar INYECTORES que coincidan con el ejemplo dado: " + ex.getMessage());
 		}
 	}
 	

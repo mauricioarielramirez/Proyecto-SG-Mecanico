@@ -2,17 +2,17 @@ package ar.com.PSGMecanico.dominio.gestor;
 
 import java.util.ArrayList;
 
-import ar.com.PSGMecanico.accesodatos.dao.TrabajoHome;
+import ar.com.PSGMecanico.accesodatos.dao.DispositivoHome;
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
-import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
+import ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo;
 
-public class GestorTrabajo extends Gestor<Trabajo> {
-private TrabajoHome trabajoDAO;
+public class GestorDispositivo extends Gestor<Dispositivo> {
+private DispositivoHome dispositivoDAO;
 
-public GestorTrabajo() throws Exception {
+public GestorDispositivo() throws Exception {
 	try {
 		sesionDeHilo = HibernateUtil.getSessionFactory().getCurrentSession();
-		trabajoDAO = new TrabajoHome();
+		dispositivoDAO = new DispositivoHome();
 	} catch (Exception ex) {
 		throw new Exception("Ha ocurrido un problema al inicializar el gestor: " + ex.getMessage());
 	}
@@ -23,10 +23,10 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.persist((Trabajo)object);
+			dispositivoDAO.persist((Dispositivo)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar el dispositivo: " + ex.getMessage());
 		}
 	}
 
@@ -35,10 +35,10 @@ public GestorTrabajo() throws Exception {
 		try {
 		setSession();
 		setTransaction();
-		trabajoDAO.attachDirty((Trabajo)object);
+		dispositivoDAO.attachDirty((Dispositivo)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Ha ocurrido un problema al modificar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al modificar el dispositivo: " + ex.getMessage());
 		}
 	}
 
@@ -47,10 +47,10 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			trabajoDAO.delete((Trabajo)object);
+			dispositivoDAO.delete((Dispositivo)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al eliminar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al eliminar el dispositivo: " + ex.getMessage());
 		}
 		
 	}
@@ -60,12 +60,12 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			Trabajo trabajo = new Trabajo();
-			trabajo = trabajoDAO.findById(id);
-			return trabajo;
+			Dispositivo dispositivo = new Dispositivo();
+			dispositivo = dispositivoDAO.findById(id);
+			return dispositivo;
 		} catch (Exception ex) {
 			closeSession();
-			throw new Exception("Ha ocurrido un error al buscar el TRABAJO por su ID: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un error al buscar el dispositivo por su ID: " + ex.getMessage());
 		}
 	}
 	
@@ -74,16 +74,14 @@ public GestorTrabajo() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			ArrayList<Trabajo> listaTrabajo = (ArrayList<Trabajo>) trabajoDAO.findByExample((Trabajo) example);
+			ArrayList<Dispositivo> listaDispositivos = (ArrayList<Dispositivo>) dispositivoDAO.findByExample((Dispositivo) example);
 			sesionDeHilo.getTransaction().commit();
-			return listaTrabajo;
+			return listaDispositivos;
 		} catch (Exception ex) {
 			closeSession();
 			throw new Exception(
-					"Ha ocurrido un error al buscar TRABAJOS que coincidan con el ejemplo dado: " + ex.getMessage());
+					"Ha ocurrido un error al buscar dispositivoS que coincidan con el ejemplo dado: " + ex.getMessage());
 		}
 	}
-	
-	
 
 }
