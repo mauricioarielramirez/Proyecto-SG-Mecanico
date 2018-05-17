@@ -6,7 +6,7 @@
     <class name="ar.com.PSGMecanico.modelo.dominio.pago.PagoParciales" table="PAGOPARCIALES">
         <id name="idPagoParcial" type="java.lang.Long">
             <column name="IDPAGOPARCIAL" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="monto" type="java.lang.Double">
             <column name="MONTO" />

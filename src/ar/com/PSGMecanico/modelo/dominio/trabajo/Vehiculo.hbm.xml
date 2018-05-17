@@ -6,7 +6,7 @@
     <class name="ar.com.PSGMecanico.modelo.dominio.trabajo.Vehiculo" table="VEHICULO">
         <id name="idVehiculo" type="java.lang.Long">
             <column name="IDVEHICULO" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="motor" type="java.lang.String">
             <column name="MOTOR" />

@@ -15,11 +15,12 @@ public class ServicioTrabajo {
 		}
 	}
 	
+	/**
+	 * Agrega o modifica un trabajo
+	 * @param trabajo
+	 */
 	public void agregarTrabajo (Trabajo trabajo) {
 		try {
-			if (trabajo.getIdTrabajo().equals(20L)) {
-				throw new Exception("Prueba de error");
-			}
 			gTrabajo.add(trabajo);
 		} catch (Exception e) {
 			

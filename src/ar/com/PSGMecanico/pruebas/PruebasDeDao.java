@@ -37,5 +37,8 @@ public class PruebasDeDao {
 		//Cargamos la entidad trabajo
 		
 	}
-
+	
+	public void crearPersona() {
+		
+	}
 }

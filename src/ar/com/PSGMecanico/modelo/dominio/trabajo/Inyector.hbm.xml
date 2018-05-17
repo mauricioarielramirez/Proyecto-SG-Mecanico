@@ -6,7 +6,7 @@
     <class name="ar.com.PSGMecanico.modelo.dominio.trabajo.Inyector" table="INYECTOR">
         <id name="idInyector" type="java.lang.Long">
             <column name="IDINYECTOR" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="orden" type="java.lang.Long">
             <column name="ORDEN" />

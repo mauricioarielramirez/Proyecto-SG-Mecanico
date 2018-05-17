@@ -6,7 +6,7 @@
     <class name="ar.com.PSGMecanico.modelo.dominio.persona.Direccion" table="DIRECCION">
         <id name="idDireccion" type="java.lang.Long">
             <column name="IDDIRECCION" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="ciudad" type="java.lang.String">
             <column name="CIUDAD" />
