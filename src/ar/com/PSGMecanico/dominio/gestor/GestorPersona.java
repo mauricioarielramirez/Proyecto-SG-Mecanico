@@ -21,10 +21,15 @@ public GestorPersona() throws Exception {
 	public void add(Object object) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-			setSession();
-			setTransaction();
-			personaDAO.persist((Persona)object);
-			sesionDeHilo.getTransaction().commit();
+			if (!existePersonaPorDNI( ((Persona)object).getNroDni() ) ) {
+				setSession();
+				setTransaction();
+				personaDAO.persist((Persona)object);
+				sesionDeHilo.getTransaction().commit();
+			}else {
+				throw new Exception("Existe una persona con el mismo documento");
+			}
+			
 		} catch (Exception ex) {
 			throw new Exception("Ha ocurrido un problema al agregar el DESCRIPCION: " + ex.getMessage());
 		}
@@ -84,6 +89,11 @@ public GestorPersona() throws Exception {
 		}
 	}
 	
+	private Boolean existePersonaPorDNI(Long dni) throws Exception {
+		ArrayList<Persona> personas = null;
+		personas = getByExample(new Persona(null, null, null, dni, null, null, null, null, null, null));
+		return (personas.size()>0 ? true : false);
+	}
 	
 
 }
