@@ -15,10 +15,23 @@ import ar.com.PSGMecanico.servicio.ServicioPersona;
 public class PruebasDeDao {
 
 	public static void main(String[] args) {
-		persistirPersona();
+//		persistirPersona();
 //		recuperarPersona();
+		modificarPersona();
 	}
 	
+	private static void modificarPersona() {
+		//Voy a recuperar una conocida
+		ServicioPersona sPersona = new ServicioPersona();
+		Persona persona = sPersona.obtenerPersona(6L);
+		
+		//Modifico el dni y dejo lo otro igual
+		persona.setNroDni(39123123L);
+		
+		sPersona.agregarPersona(persona, persona.getTelefonos(),persona.getDirecciones(), persona.getCorreos());
+		
+	}
+
 	public static void pruebaDeGestorTrabajo() {
 // TODO Auto-generated method stub
 		GestorTrabajo gTrabajo = null;

@@ -18,20 +18,17 @@
  * -- Arreglo de CorreoElectronico (Si se quitaron elementos, se borran las relaciones y se eliminan los elementos. Si son nuevos, se agrega y se persiste)
  */
 package ar.com.PSGMecanico.servicio;
-
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import ar.com.PSGMecanico.dominio.gestor.GestorCorreoElectronico;
 import ar.com.PSGMecanico.dominio.gestor.GestorDireccion;
 import ar.com.PSGMecanico.dominio.gestor.GestorPersona;
 import ar.com.PSGMecanico.dominio.gestor.GestorTelefono;
-import ar.com.PSGMecanico.dominio.gestor.GestorTrabajo;
 import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
 import ar.com.PSGMecanico.modelo.dominio.persona.Direccion;
 import ar.com.PSGMecanico.modelo.dominio.persona.Persona;
 import ar.com.PSGMecanico.modelo.dominio.persona.Telefono;
-import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
 
 public class ServicioPersona {
 	private GestorPersona gPersona;
@@ -73,31 +70,56 @@ public class ServicioPersona {
 			if (correos.size() == 0) {
 				throw new Exception("Se requiere un correo electronico");
 			}
-			//Persistir las entidades agregadas
-			for (Telefono t: telefonos) {
-				persistirTelefono(t);
+			//Evaluamos si se trata de un modificacion
+			if (persona.getIdPersona() == null) {
+				//Es un alta
+				//Persistir las entidades agregadas
+				for (Telefono t: telefonos) {
+					persistirTelefono(t);
+				}
+				
+				for (Direccion d: direcciones) {
+					persistirDireccion(d);
+				}
+				
+				for (CorreoElectronico c: correos) {
+					presistirCorreoElectronico(c);
+				}
+				
+				//Las entidades están peristentes, asignarlas a la persona
+				persona.setTelefonos(telefonos);
+				persona.setCorreos(correos);
+				persona.setDirecciones(direcciones);
+				
+				//persistir la persona
+				gPersona.add(persona);
+				
+			} else {
+				modificarPersona(persona, telefonos, direcciones, correos);
 			}
 			
-			for (Direccion d: direcciones) {
-				persistirDireccion(d);
-			}
-			
-			for (CorreoElectronico c: correos) {
-				presistirCorreoElectronico(c);
-			}
-			
-			//Las entidades están peristentes, asignarlas a la persona
-			persona.setTelefonos(telefonos);
-			persona.setCorreos(correos);
-			persona.setDirecciones(direcciones);
-			
-			//persistir la persona
-			gPersona.add(persona);
 			
 		} catch (Exception e) {
 			System.out.println("Ha ocurrido un error");
 			System.out.println("EXCEPCIÓN: "+e.getMessage());
 			System.out.println("STACKTRACE: "+e.getStackTrace());
+			// Borro si falló la inserción, no la modificación
+			if(persona.getIdPersona() == null) {
+				try {
+					for (Telefono t : telefonos) {
+						gTelefono.delete(t);
+					}
+					for (Direccion d : direcciones) {
+						gDireccion.delete(d);
+					}
+					for (CorreoElectronico c : correos) {
+						gCorreoElectronico.delete(c);
+					} 
+				} catch (Exception e2) {
+					System.out.println("Ha ocurrido un error");
+					System.out.println("EXCEPCIÓN: "+e2.getMessage());
+				}
+			}
 		}
 	}
 
@@ -143,61 +165,6 @@ public class ServicioPersona {
 		}
 		return correo.getIdCorreoElectronico();
 	}
-
-	/**
-	 * Este método tiene toda la lógica de validación de negocio para agregar o
-	 * modificar una persona al sistema. Este método no es accesible externamente.
-	 * 
-	 * @param persona Persona nueva o existente
-	 * @param idTelefono Arreglo de id de Telefono
-	 * @param idDireccion Arreglo de id de Direccion
-	 * @param idCorreoElectronico Arreglo de CorreoElectronico
-	 * @return
-	 */
-//	private Long persistirPersona(Persona persona, ArrayList<Integer> idTelefono, ArrayList<Integer> idDireccion,
-//			ArrayList<Integer> idCorreoElectronico) {
-//		try {
-//
-//			// Buscar las entidades y asociarla a la entidad persona
-//			Set<Telefono> telefonos = null;
-//			Set<Direccion> direcciones = null;
-//			Set<CorreoElectronico> correos = null;
-//
-//			for (Integer t : idTelefono) {
-//				telefonos.add((Telefono) gTelefono.getById(t.longValue()));
-//			}
-//
-//			for (Integer d : idDireccion) {
-//				direcciones.add((Direccion) gDireccion.getById(d.longValue()));
-//			}
-//
-//			for (Integer c : idCorreoElectronico) {
-//				correos.add((CorreoElectronico) gCorreoElectronico.getById(c.longValue()));
-//			}
-//
-//			// Valida que se hayan encontrado todas las entidades solicitados
-//			if (telefonos.size() != idTelefono.size()) {
-//				throw new Exception("No se encontró el teléfono");
-//			}
-//			if (direcciones.size() != direcciones.size()) {
-//				throw new Exception("No se encontró el teléfono");
-//			}
-//			if (correos.size() != idCorreoElectronico.size()) {
-//				throw new Exception("No se encontró el teléfono");
-//			}
-//
-//			// Asocio las listas a la entidad persona
-//			persona.setTelefonos(telefonos);
-//			persona.setDirecciones(direcciones);
-//			persona.setCorreos(correos);
-//
-//			gPersona.add(persona);
-//
-//		} catch (Exception e) {
-//			System.out.println("Ocurrio un problema: " + e.getMessage());
-//		}
-//		return (persona.getIdPersona());
-//	}
 
 	/**
 	 * Elimina una persona del sistema, pasando como parámetro el identificador Se
@@ -294,6 +261,194 @@ public class ServicioPersona {
 		}
 
 		return persona;
+	}
+	
+	private void modificarPersona(Persona persona, Set<Telefono> telefonos, Set<Direccion> direcciones,
+			Set<CorreoElectronico> correos) throws Exception {
+		//Recuperamos la persona
+		//Verificamos cambio de DNI
+		Boolean cambioTelefono = false;
+		Boolean cambioDireccion = false;
+		Boolean cambioCorreoElectronico = false;
+		
+		if (persona.getIdPersona() == null) {throw new Exception ("La persona aun no existe en el sistema. No se puede modificar.");}
+		
+		Persona personaPersistente = obtenerPersona(persona.getIdPersona());
+		if (!personaPersistente.getNroDni().equals(persona.getNroDni())) {
+			if (gPersona.existePersonaPorDNI(persona.getNroDni())) {
+				throw new Exception("Modificación no permitida: Ya existe el DNI");
+			};
+		}
+
+		// Control de cambios en los datos
+		cambioTelefono = verificarCambioDeDatos((Object)telefonos);
+		cambioDireccion = verificarCambioDeDatos((Object)direcciones);
+		cambioCorreoElectronico = verificarCambioDeDatos((Object)correos);
+		
+		// De acuerdo a si hubo cambio, paso por los métodos de ABM de datos
+		if (cambioTelefono == true) { 
+			eliminarBorrados((Object)telefonos);
+			agregarNuevos((Object)telefonos);
+			modificarExistentes((Object)telefonos);	
+			//vuelvo a setear la lista en persona
+			persona.setTelefonos(null);
+			persona.setTelefonos(telefonos); 
+	
+		}
+		
+		if (cambioDireccion == true) { 
+			eliminarBorrados((Object)direcciones);
+			agregarNuevos((Object)direcciones);
+			modificarExistentes((Object)direcciones);	
+			//vuelvo a setear la lista en persona
+			persona.setDirecciones(null);
+			persona.setDirecciones(direcciones); 
+		}
+		
+		if (cambioCorreoElectronico == true) { 
+			eliminarBorrados((Object)correos);
+			agregarNuevos((Object)correos);
+			modificarExistentes((Object)correos);
+			//vuelvo a setear la lista en persona
+			persona.setCorreos(null);
+			persona.setCorreos(correos); 
+		}
+
+		// Aplico las modificaciones
+		gPersona.modify(persona);
+		
+	}
+	
+	/**
+	 * Verifica si hubo cambios desde los elementos que se pasan por parámetro hacia los que están persistentes
+	 * @param objetos Objeto Set de tipo Telefono, Direccion o CorreoElectronico  
+	 * @return
+	 */
+	private Boolean verificarCambioDeDatos(Object objetos) {
+		//Busco elementos persistentes
+		Boolean huboCambios = false;
+		Set<Object> objetosPersistentes = new HashSet<Object>();
+		
+		try {
+			for (Object t : (Set<Object>)objetos) {
+				if (t.getClass().getName().equals("Telefono")) {
+					objetosPersistentes.add(gTelefono.getById(((Telefono) t).getIdTelefono()));
+				}
+				if (t.getClass().getName().equals("Direccion")) {
+					objetosPersistentes.add(gDireccion.getById(((Direccion) t).getIdDireccion()));
+				}
+				if (t.getClass().getName().equals("CorreoElectronico")) {
+					objetosPersistentes.add(gCorreoElectronico.getById(((CorreoElectronico) t).getIdCorreoElectronico()));
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Ocurrió un problema");
+			System.out.println("Excepción: " + e.getMessage());
+			System.out.println("StackTrace: " + e.getStackTrace());
+		}
+		
+		//Comparo elemento a elemento
+		for (Object t : (Set<Object>)objetos) {
+			for (Object t1:objetosPersistentes) {
+				//Si hubo cambios o la cantidad de elementos no coinciden, notifico que hubo cambios
+				if (!t.equals(t1) || (((Set<Object>)objetos).size() != ((Set<Object>)objetosPersistentes).size())  ) { huboCambios = true; }
+			}
+			
+		}
+				
+		return huboCambios;
+	}
+	
+	/**
+	 * Elimina los elementos persistentes que no están comprendidos en la lista que se pasa como parámetro
+	 * @param objetos Objeto Set de tipo Telefono, Direccion o CorreoElectronico
+	 */
+	private void eliminarBorrados(Object objetos) {
+		Set<Object> objetosPersistentes = new HashSet<Object>();
+		try {
+			//Obtengo la lista de elementos persistentes
+			for (Object o : (Set<Object>)objetos) {
+				if (o.getClass().getName().equals("Telefono")) {
+					objetosPersistentes.add(gTelefono.getById(((Telefono) o).getIdTelefono()));
+				}
+				if (o.getClass().getName().equals("Direccion")) {
+					objetosPersistentes.add(gDireccion.getById(((Direccion) o).getIdDireccion()));
+				}
+				if (o.getClass().getName().equals("CorreoElectronico")) {
+					objetosPersistentes.add(gCorreoElectronico.getById(((CorreoElectronico) o).getIdCorreoElectronico()));
+				}
+			} 
+			
+			for (Object o: (Set<Object>)objetosPersistentes) {
+				// Si no se encuentra el objeto persistente dentro del listado de objetos como parámetro, entonces se elimina
+				if (!((Set<Object>)objetos).contains(o)) {
+					if (o.getClass().getName().equals("Telefono")) {
+						gTelefono.delete(((Telefono)o).getIdTelefono());
+					}
+					if (o.getClass().getName().equals("Direccion")) {
+						gDireccion.delete(((Direccion)o).getIdDireccion());
+					}
+					if (o.getClass().getName().equals("CorreoElectronico")) {
+						gCorreoElectronico.delete(((CorreoElectronico)o).getIdCorreoElectronico());
+					}
+				}
+			}
+			
+		} catch(Exception ex) {
+			System.out.println("Ocurrió un problema");
+			System.out.println("Excepción: " + ex.getMessage());
+			System.out.println("StackTrace: " + ex.getStackTrace());
+		}
+	}
+	
+	/**
+	 * Agrega elementos que no están persistentes en la base de datos y que se pasan como parámetro
+	 * @param objetos Set de objetos Telefono, Direccion o CorreoElectronico
+	 */
+	private void agregarNuevos(Object objetos) {
+		try {
+			// Opero con objetos que no tengan id asignado
+			for (Object o: (Set<Object>)objetos) {
+				if (o.getClass().getName().equals("Telefono")) {
+					if (((Telefono)o).getIdTelefono() == null ) {gTelefono.add(o);}
+				}
+				if (o.getClass().getName().equals("Direccion")) {
+					if (((Direccion)o).getIdDireccion() == null ) {gDireccion.add(o);}
+				}
+				if (o.getClass().getName().equals("CorreoElectronico")) {
+					if (((CorreoElectronico)o).getIdCorreoElectronico() == null ) {gCorreoElectronico.add(o);}
+				}
+			} 
+		} catch (Exception ex) {
+			System.out.println("Ocurrió un problema");
+			System.out.println("Excepción: " + ex.getMessage());
+			System.out.println("StackTrace: " + ex.getStackTrace());
+		}
+	}
+	
+	/**
+	 * Modifica los elementos persistentes en la base de datos y que se pasan como parámetros
+	 * @param objetos
+	 */
+	private void modificarExistentes (Object objetos) {
+		try {
+			// Opero sólo con objetos que tenga algún id
+			for (Object o: (Set<Object>)objetos) {
+				if (o.getClass().getName().equals("Telefono")) {
+					if (((Telefono)o).getIdTelefono() != null ) {gTelefono.modify(o);}
+				}
+				if (o.getClass().getName().equals("Direccion")) {
+					if (((Direccion)o).getIdDireccion() != null ) {gDireccion.modify(o);}
+				}
+				if (o.getClass().getName().equals("CorreoElectronico")) {
+					if (((CorreoElectronico)o).getIdCorreoElectronico() != null ) {gCorreoElectronico.modify(o);}
+				}
+			} 
+		} catch (Exception ex) {
+			System.out.println("Ocurrió un problema");
+			System.out.println("Excepción: " + ex.getMessage());
+			System.out.println("StackTrace: " + ex.getStackTrace());
+		}
 	}
 	
 }

@@ -29,6 +29,31 @@ public class CorreoElectronico {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CorreoElectronico other = (CorreoElectronico) obj;
+		if (direccion == null) {
+			if (other.direccion != null)
+				return false;
+		} else if (!direccion.equals(other.direccion))
+			return false;
+		return true;
+	}
 	
 	
 	

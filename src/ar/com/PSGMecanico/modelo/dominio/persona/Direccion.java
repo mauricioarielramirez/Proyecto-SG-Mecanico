@@ -86,6 +86,77 @@ public class Direccion {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((calle == null) ? 0 : calle.hashCode());
+		result = prime * result + ((ciudad == null) ? 0 : ciudad.hashCode());
+		result = prime * result + ((departamentoEdificio == null) ? 0 : departamentoEdificio.hashCode());
+		result = prime * result + ((edificio == null) ? 0 : edificio.hashCode());
+		result = prime * result + ((nombreEdificio == null) ? 0 : nombreEdificio.hashCode());
+		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + ((observaciones == null) ? 0 : observaciones.hashCode());
+		result = prime * result + ((piso == null) ? 0 : piso.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Direccion other = (Direccion) obj;
+		if (calle == null) {
+			if (other.calle != null)
+				return false;
+		} else if (!calle.equals(other.calle))
+			return false;
+		if (ciudad == null) {
+			if (other.ciudad != null)
+				return false;
+		} else if (!ciudad.equals(other.ciudad))
+			return false;
+		if (departamentoEdificio == null) {
+			if (other.departamentoEdificio != null)
+				return false;
+		} else if (!departamentoEdificio.equals(other.departamentoEdificio))
+			return false;
+		if (edificio == null) {
+			if (other.edificio != null)
+				return false;
+		} else if (!edificio.equals(other.edificio))
+			return false;
+		if (nombreEdificio == null) {
+			if (other.nombreEdificio != null)
+				return false;
+		} else if (!nombreEdificio.equals(other.nombreEdificio))
+			return false;
+		if (numero == null) {
+			if (other.numero != null)
+				return false;
+		} else if (!numero.equals(other.numero))
+			return false;
+		if (observaciones == null) {
+			if (other.observaciones != null)
+				return false;
+		} else if (!observaciones.equals(other.observaciones))
+			return false;
+		if (piso == null) {
+			if (other.piso != null)
+				return false;
+		} else if (!piso.equals(other.piso))
+			return false;
+		return true;
+	}
+
+
 	
 	
 }

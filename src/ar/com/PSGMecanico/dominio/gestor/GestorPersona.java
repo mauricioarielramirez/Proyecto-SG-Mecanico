@@ -89,10 +89,10 @@ public GestorPersona() throws Exception {
 		}
 	}
 	
-	private Boolean existePersonaPorDNI(Long dni) throws Exception {
+	public Boolean existePersonaPorDNI(Long dni) throws Exception {
 		ArrayList<Persona> personas = null;
 		personas = getByExample(new Persona(null, null, null, dni, null, null, null, null, null, null));
-		return (personas.size()>0 ? true : false);
+		return (personas.size() > 0 ? true : false);
 	}
 	
 
