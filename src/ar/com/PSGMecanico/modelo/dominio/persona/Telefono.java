@@ -4,8 +4,11 @@
 package ar.com.PSGMecanico.modelo.dominio.persona;
 
 public class Telefono {
+	public static String TELEFONO_CELULAR = "CELULAR";
+	public static String TELEFONO_FIJO = "FIJO";
+	
 	private Long idTelefono;
-	private Long numero;
+	private String numero;
 	private String tipoTelefono;
 	
 	public Telefono() {
@@ -13,7 +16,7 @@ public class Telefono {
 	}
 
 	
-	public Telefono(Long idTelefono, Long numero, String tipoTelefono) {
+	public Telefono(Long idTelefono, String numero, String tipoTelefono) {
 		super();
 		this.idTelefono = idTelefono;
 		this.numero = numero;
@@ -26,10 +29,10 @@ public class Telefono {
 	public void setIdTelefono(Long idTelefono) {
 		this.idTelefono = idTelefono;
 	}
-	public Long getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(Long numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public String getTipoTelefono() {

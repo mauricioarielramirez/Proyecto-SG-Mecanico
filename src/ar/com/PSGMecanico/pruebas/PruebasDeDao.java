@@ -23,10 +23,23 @@ public class PruebasDeDao {
 	private static void modificarPersona() {
 		//Voy a recuperar una conocida
 		ServicioPersona sPersona = new ServicioPersona();
-		Persona persona = sPersona.obtenerPersona(6L);
+		Persona persona = sPersona.obtenerPersona(1L);
 		
 		//Modifico el dni y dejo lo otro igual
-		persona.setNroDni(39123123L);
+		/*persona.setNroDni(39123123L);
+		*/
+		
+		//Modificar un teléfono
+		Set<Telefono> telefonos = persona.getTelefonos();
+		for (Telefono t : telefonos) {
+			if (t.getIdTelefono() == 1L) {
+					t.setNumero("+540343999999"); 
+					t.setTipoTelefono(Telefono.TELEFONO_CELULAR);
+				}
+		}
+		
+		persona.setTelefonos(null);
+		persona.setTelefonos(telefonos);
 		
 		sPersona.agregarPersona(persona, persona.getTelefonos(),persona.getDirecciones(), persona.getCorreos());
 		
@@ -89,15 +102,14 @@ public class PruebasDeDao {
 		direccion.setPiso(0);
 		
 		//Datos de telefono
-		telefono.setNumero(343155632415L); //El telefono si es long, puede omitir ceros a la izquierda, usar string
-		telefono.setTipoTelefono("CELULAR");
-		
-//		telefono2.setNumero(3431557777L); //El telefono si es long, puede omitir ceros a la izquierda, usar string
-//		telefono2.setTipoTelefono("CELULAR");
+		telefono.setNumero("03434232545"); //El telefono si es long, puede omitir ceros a la izquierda, usar string
+		telefono.setTipoTelefono(Telefono.TELEFONO_FIJO);
+		telefono2.setNumero("+5403434272012"); //El telefono si es long, puede omitir ceros a la izquierda, usar string
+		telefono2.setTipoTelefono(Telefono.TELEFONO_CELULAR);
 		
 		//Datos de correo electrónico
 		correoElectronico.setDireccion("pemiliano.altamirano@gmail.com");
-//		correoElectronico2.setDireccion("Armani.Franco@gmail.com");
+		correoElectronico2.setDireccion("Armani.Franco@gmail.com");
 		
 		//Crear set para dirección, teléfono y correo electrónico
 		Set<Telefono> telefonos = new HashSet<Telefono>();
@@ -105,10 +117,10 @@ public class PruebasDeDao {
 		Set<CorreoElectronico> correos = new HashSet<CorreoElectronico>();;
 		
 		telefonos.add(telefono);
-//		telefonos.add(telefono2);
+		telefonos.add(telefono2);
 		direcciones.add(direccion);
 		correos.add(correoElectronico);
-//		correos.add(correoElectronico2);
+		correos.add(correoElectronico2);
 		
 		//Instanciamos el servicio
 		ServicioPersona sPersona = new ServicioPersona();

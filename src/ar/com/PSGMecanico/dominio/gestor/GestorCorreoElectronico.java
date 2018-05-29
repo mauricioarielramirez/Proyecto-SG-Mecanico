@@ -26,7 +26,7 @@ public GestorCorreoElectronico() throws Exception {
 			correoelectronicoDAO.persist((CorreoElectronico)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el PAGO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar el CORREO ELECTRONICO: " + ex.getMessage());
 		}
 	}
 
@@ -38,7 +38,7 @@ public GestorCorreoElectronico() throws Exception {
 		correoelectronicoDAO.attachDirty((CorreoElectronico)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Ha ocurrido un problema al modificar el PAGO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al modificar el CORREO ELECTRONICO: " + ex.getMessage());
 		}
 	}
 
@@ -50,7 +50,7 @@ public GestorCorreoElectronico() throws Exception {
 			correoelectronicoDAO.delete((CorreoElectronico)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al eliminar el PAGO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al eliminar el CORREO ELECTRONICO: " + ex.getMessage());
 		}
 		
 	}
@@ -65,7 +65,7 @@ public GestorCorreoElectronico() throws Exception {
 			return trabajo;
 		} catch (Exception ex) {
 			closeSession();
-			throw new Exception("Ha ocurrido un error al buscar el PAGO por su ID: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un error al buscar el CORREO ELECTRONICO por su ID: " + ex.getMessage());
 		}
 	}
 	

@@ -8,7 +8,7 @@
             <column name="IDTELEFONO" />
             <generator class="identity" />
         </id>
-        <property name="numero" type="java.lang.Long">
+        <property name="numero" type="java.lang.String">
             <column name="NUMERO" />
         </property>
         <property name="tipoTelefono" type="java.lang.String">

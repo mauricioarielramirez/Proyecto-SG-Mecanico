@@ -281,9 +281,10 @@ public class ServicioPersona {
 		}
 
 		// Control de cambios en los datos
-		cambioTelefono = verificarCambioDeDatos((Object)telefonos);
-		cambioDireccion = verificarCambioDeDatos((Object)direcciones);
-		cambioCorreoElectronico = verificarCambioDeDatos((Object)correos);
+		
+		cambioTelefono = verificarCambioDeDatos(telefonos);
+		cambioDireccion = verificarCambioDeDatos(direcciones);
+		cambioCorreoElectronico = verificarCambioDeDatos(correos);
 		
 		// De acuerdo a si hubo cambio, paso por los métodos de ABM de datos
 		if (cambioTelefono == true) { 
@@ -292,7 +293,12 @@ public class ServicioPersona {
 			modificarExistentes((Object)telefonos);	
 			//vuelvo a setear la lista en persona
 			persona.setTelefonos(null);
-			persona.setTelefonos(telefonos); 
+			//Casteo para convertir object en telefono
+			Set <Telefono> telefonosPersona = new HashSet<Telefono>();
+			telefonosPersona.addAll(telefonos);
+			persona.setTelefonos(telefonosPersona);
+			
+			
 	
 		}
 		
@@ -302,7 +308,9 @@ public class ServicioPersona {
 			modificarExistentes((Object)direcciones);	
 			//vuelvo a setear la lista en persona
 			persona.setDirecciones(null);
-			persona.setDirecciones(direcciones); 
+			Set<Direccion> direccionesPersona = new HashSet<Direccion>();
+			direccionesPersona.addAll(direcciones);
+			persona.setDirecciones(direccionesPersona); 
 		}
 		
 		if (cambioCorreoElectronico == true) { 
@@ -311,33 +319,39 @@ public class ServicioPersona {
 			modificarExistentes((Object)correos);
 			//vuelvo a setear la lista en persona
 			persona.setCorreos(null);
-			persona.setCorreos(correos); 
+			Set<CorreoElectronico> correosPersona = new HashSet<CorreoElectronico>();
+			correosPersona.addAll(correos);
+			persona.setCorreos(correosPersona); 
 		}
 
 		// Aplico las modificaciones
-		gPersona.modify(persona);
+		if (!persona.equals(personaPersistente) || cambioTelefono == true || cambioDireccion == true || cambioCorreoElectronico == true) {
+			gPersona.modify(persona);
+		}
+		
 		
 	}
 	
 	/**
 	 * Verifica si hubo cambios desde los elementos que se pasan por parámetro hacia los que están persistentes
+	 * @param <T>
 	 * @param objetos Objeto Set de tipo Telefono, Direccion o CorreoElectronico  
 	 * @return
 	 */
-	private Boolean verificarCambioDeDatos(Object objetos) {
+	private <T> Boolean verificarCambioDeDatos(Set<T> objetos) {
 		//Busco elementos persistentes
 		Boolean huboCambios = false;
 		Set<Object> objetosPersistentes = new HashSet<Object>();
 		
 		try {
-			for (Object t : (Set<Object>)objetos) {
-				if (t.getClass().getName().equals("Telefono")) {
+			for (Object t : objetos) {
+				if (t.getClass().getName().equals(Telefono.class.getName())) {
 					objetosPersistentes.add(gTelefono.getById(((Telefono) t).getIdTelefono()));
 				}
-				if (t.getClass().getName().equals("Direccion")) {
+				if (t.getClass().getName().equals(Direccion.class.getName())) {
 					objetosPersistentes.add(gDireccion.getById(((Direccion) t).getIdDireccion()));
 				}
-				if (t.getClass().getName().equals("CorreoElectronico")) {
+				if (t.getClass().getName().equals(CorreoElectronico.class.getName())) {
 					objetosPersistentes.add(gCorreoElectronico.getById(((CorreoElectronico) t).getIdCorreoElectronico()));
 				}
 			}
@@ -368,13 +382,13 @@ public class ServicioPersona {
 		try {
 			//Obtengo la lista de elementos persistentes
 			for (Object o : (Set<Object>)objetos) {
-				if (o.getClass().getName().equals("Telefono")) {
+				if (o.getClass().getName().equals(Telefono.class.getName())) {
 					objetosPersistentes.add(gTelefono.getById(((Telefono) o).getIdTelefono()));
 				}
-				if (o.getClass().getName().equals("Direccion")) {
+				if (o.getClass().getName().equals(Direccion.class.getName())) {
 					objetosPersistentes.add(gDireccion.getById(((Direccion) o).getIdDireccion()));
 				}
-				if (o.getClass().getName().equals("CorreoElectronico")) {
+				if (o.getClass().getName().equals(CorreoElectronico.class.getName())) {
 					objetosPersistentes.add(gCorreoElectronico.getById(((CorreoElectronico) o).getIdCorreoElectronico()));
 				}
 			} 
@@ -382,13 +396,13 @@ public class ServicioPersona {
 			for (Object o: (Set<Object>)objetosPersistentes) {
 				// Si no se encuentra el objeto persistente dentro del listado de objetos como parámetro, entonces se elimina
 				if (!((Set<Object>)objetos).contains(o)) {
-					if (o.getClass().getName().equals("Telefono")) {
+					if (o.getClass().getName().equals(Telefono.class.getName())) {
 						gTelefono.delete(((Telefono)o).getIdTelefono());
 					}
-					if (o.getClass().getName().equals("Direccion")) {
+					if (o.getClass().getName().equals(Direccion.class.getName())) {
 						gDireccion.delete(((Direccion)o).getIdDireccion());
 					}
-					if (o.getClass().getName().equals("CorreoElectronico")) {
+					if (o.getClass().getName().equals(CorreoElectronico.class.getName())) {
 						gCorreoElectronico.delete(((CorreoElectronico)o).getIdCorreoElectronico());
 					}
 				}
@@ -409,13 +423,13 @@ public class ServicioPersona {
 		try {
 			// Opero con objetos que no tengan id asignado
 			for (Object o: (Set<Object>)objetos) {
-				if (o.getClass().getName().equals("Telefono")) {
+				if (o.getClass().getName().equals(Telefono.class.getName())) {
 					if (((Telefono)o).getIdTelefono() == null ) {gTelefono.add(o);}
 				}
-				if (o.getClass().getName().equals("Direccion")) {
+				if (o.getClass().getName().equals(Direccion.class.getName())) {
 					if (((Direccion)o).getIdDireccion() == null ) {gDireccion.add(o);}
 				}
-				if (o.getClass().getName().equals("CorreoElectronico")) {
+				if (o.getClass().getName().equals(CorreoElectronico.class.getName())) {
 					if (((CorreoElectronico)o).getIdCorreoElectronico() == null ) {gCorreoElectronico.add(o);}
 				}
 			} 
@@ -434,13 +448,13 @@ public class ServicioPersona {
 		try {
 			// Opero sólo con objetos que tenga algún id
 			for (Object o: (Set<Object>)objetos) {
-				if (o.getClass().getName().equals("Telefono")) {
+				if (o.getClass().getName().equals(Telefono.class.getName())) {
 					if (((Telefono)o).getIdTelefono() != null ) {gTelefono.modify(o);}
 				}
-				if (o.getClass().getName().equals("Direccion")) {
+				if (o.getClass().getName().equals(Direccion.class.getName())) {
 					if (((Direccion)o).getIdDireccion() != null ) {gDireccion.modify(o);}
 				}
-				if (o.getClass().getName().equals("CorreoElectronico")) {
+				if (o.getClass().getName().equals(CorreoElectronico.class.getName())) {
 					if (((CorreoElectronico)o).getIdCorreoElectronico() != null ) {gCorreoElectronico.modify(o);}
 				}
 			} 
