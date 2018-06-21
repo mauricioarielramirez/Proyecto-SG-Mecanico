@@ -33,6 +33,7 @@ public GestorTelefono() throws Exception {
 	@Override
 	public void modify(Object object) throws Exception {
 		try {
+		closeSession(); //Intento comittiar si quedó algo abierto
 		setSession();
 		setTransaction();
 		telefonoDAO.attachDirty((Telefono)object);
@@ -60,9 +61,9 @@ public GestorTelefono() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			Telefono trabajo = new Telefono();
-			trabajo = telefonoDAO.findById(id);
-			return trabajo;
+			Telefono telefono = new Telefono();
+			telefono = telefonoDAO.findById(id);
+			return telefono;
 		} catch (Exception ex) {
 			closeSession();
 			throw new Exception("Ha ocurrido un error al buscar el TELEFONO por su ID: " + ex.getMessage());

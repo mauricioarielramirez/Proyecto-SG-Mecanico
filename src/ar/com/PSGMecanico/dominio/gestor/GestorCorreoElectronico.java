@@ -33,6 +33,7 @@ public GestorCorreoElectronico() throws Exception {
 	@Override
 	public void modify(Object object) throws Exception {
 		try {
+		closeSession(); //Intento comittiar si quedó algo abierto
 		setSession();
 		setTransaction();
 		correoelectronicoDAO.attachDirty((CorreoElectronico)object);

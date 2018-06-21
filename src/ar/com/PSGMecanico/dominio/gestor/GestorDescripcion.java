@@ -26,7 +26,7 @@ public GestorDescripcion() throws Exception {
 			descripcionDAO.persist((Descripcion)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar el DESCRIPCION: " + ex.getMessage());
 		}
 	}
 
@@ -38,7 +38,7 @@ public GestorDescripcion() throws Exception {
 		descripcionDAO.attachDirty((Descripcion)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Ha ocurrido un problema al modificar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al modificar el DESCRIPCION: " + ex.getMessage());
 		}
 	}
 
@@ -50,7 +50,7 @@ public GestorDescripcion() throws Exception {
 			descripcionDAO.delete((Descripcion)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al eliminar el TRABAJO: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al eliminar el DESCRIPCION: " + ex.getMessage());
 		}
 		
 	}
@@ -65,7 +65,7 @@ public GestorDescripcion() throws Exception {
 			return trabajo;
 		} catch (Exception ex) {
 			closeSession();
-			throw new Exception("Ha ocurrido un error al buscar el TRABAJO por su ID: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un error al buscar el DESCRIPCION por su ID: " + ex.getMessage());
 		}
 	}
 	
@@ -80,7 +80,7 @@ public GestorDescripcion() throws Exception {
 		} catch (Exception ex) {
 			closeSession();
 			throw new Exception(
-					"Ha ocurrido un error al buscar TRABAJOS que coincidan con el ejemplo dado: " + ex.getMessage());
+					"Ha ocurrido un error al buscar DESCRIPCIONS que coincidan con el ejemplo dado: " + ex.getMessage());
 		}
 	}
 	

@@ -31,19 +31,21 @@ public GestorPersona() throws Exception {
 			}
 			
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al agregar el DESCRIPCION: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al agregar la PERSONA: " + ex.getMessage());
 		}
 	}
 
 	@Override
 	public void modify(Object object) throws Exception {
 		try {
+		//No commitea los telefonos
+		closeSession(); //Intento cerrar la session para evbitar "Duplicate entity in session"
 		setSession();
 		setTransaction();
 		personaDAO.attachDirty((Persona)object);
 		sesionDeHilo.getTransaction().commit();
 		} catch(Exception ex) {
-			throw new Exception("Ha ocurrido un problema al modificar el DESCRIPCION: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al modificar la PERSONA: " + ex.getMessage());
 		}
 	}
 
@@ -55,7 +57,7 @@ public GestorPersona() throws Exception {
 			personaDAO.delete((Persona)object);
 			sesionDeHilo.getTransaction().commit();
 		} catch (Exception ex) {
-			throw new Exception("Ha ocurrido un problema al eliminar el DESCRIPCION: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un problema al eliminar la PERSONA: " + ex.getMessage());
 		}
 		
 	}
@@ -65,12 +67,12 @@ public GestorPersona() throws Exception {
 		try {
 			setSession();
 			setTransaction();
-			Persona trabajo = new Persona();
-			trabajo = personaDAO.findById(id);
-			return trabajo;
+			Persona persona = new Persona();
+			persona = personaDAO.findById(id);
+			return persona;
 		} catch (Exception ex) {
 			closeSession();
-			throw new Exception("Ha ocurrido un error al buscar el DESCRIPCION por su ID: " + ex.getMessage());
+			throw new Exception("Ha ocurrido un error al buscar la PERSONA por su ID: " + ex.getMessage());
 		}
 	}
 	

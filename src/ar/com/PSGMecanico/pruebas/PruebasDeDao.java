@@ -5,10 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import ar.com.PSGMecanico.dominio.gestor.GestorTrabajo;
-import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
-import ar.com.PSGMecanico.modelo.dominio.persona.Direccion;
-import ar.com.PSGMecanico.modelo.dominio.persona.Persona;
 import ar.com.PSGMecanico.modelo.dominio.persona.Telefono;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.CorreoElectronicoDTO;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.DireccionDTO;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.PersonaDTO;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.TelefonoDTO;
 import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
 import ar.com.PSGMecanico.servicio.ServicioPersona;
 
@@ -23,20 +24,35 @@ public class PruebasDeDao {
 	private static void modificarPersona() {
 		//Voy a recuperar una conocida
 		ServicioPersona sPersona = new ServicioPersona();
-		Persona persona = sPersona.obtenerPersona(1L);
+		PersonaDTO persona = sPersona.obtenerPersona(1L);
 		
 		//Modifico el dni y dejo lo otro igual
 		/*persona.setNroDni(39123123L);
 		*/
 		
 		//Modificar un teléfono
-		Set<Telefono> telefonos = persona.getTelefonos();
-		for (Telefono t : telefonos) {
+		Set<TelefonoDTO> telefonos = persona.getTelefonos();
+		Set<TelefonoDTO> telefonosCambiados = new HashSet<TelefonoDTO>();
+		for (TelefonoDTO t : telefonos) {
 			if (t.getIdTelefono() == 1L) {
-					t.setNumero("+540343999999"); 
-					t.setTipoTelefono(Telefono.TELEFONO_CELULAR);
+					t.setNumero("+540342423254596"); 
+					t.setTipoTelefono(Telefono.TELEFONO_FIJO);
 				}
 		}
+		
+		
+		//Quitar un elemento
+//				
+//		for (TelefonoDTO t : telefonos) {
+//			if ((t.getIdTelefono() == 4L) || (t.getIdTelefono() == 1L) ) {
+//				telefonosCambiados.add(t);
+//				}
+//		}
+		
+//		TelefonoDTO telefonoDTOnuevo = new TelefonoDTO();
+//		telefonoDTOnuevo.setNumero("+5403424223367");
+//		telefonoDTOnuevo.setTipoTelefono(Telefono.TELEFONO_FIJO);
+//		telefonos.add(telefonoDTOnuevo);
 		
 		persona.setTelefonos(null);
 		persona.setTelefonos(telefonos);
@@ -76,13 +92,13 @@ public class PruebasDeDao {
 	
 	public static void persistirPersona() {
 		// Creamos las entidades y las cargamos.
-		Persona persona = new Persona();
-		Direccion direccion = new Direccion();
-		Telefono telefono = new Telefono();
-		Telefono telefono2 = new Telefono();
+		PersonaDTO persona = new PersonaDTO();
+		DireccionDTO direccion = new DireccionDTO();
+		TelefonoDTO telefono = new TelefonoDTO();
+		TelefonoDTO telefono2 = new TelefonoDTO();
 		
-		CorreoElectronico correoElectronico= new CorreoElectronico();
-		CorreoElectronico correoElectronico2= new CorreoElectronico();
+		CorreoElectronicoDTO correoElectronico= new CorreoElectronicoDTO();
+		CorreoElectronicoDTO correoElectronico2= new CorreoElectronicoDTO();
 		
 		//Datos de persona
 		persona.setApellido("Altamirano");
@@ -112,9 +128,9 @@ public class PruebasDeDao {
 		correoElectronico2.setDireccion("Armani.Franco@gmail.com");
 		
 		//Crear set para dirección, teléfono y correo electrónico
-		Set<Telefono> telefonos = new HashSet<Telefono>();
-		Set<Direccion> direcciones = new HashSet<Direccion>();
-		Set<CorreoElectronico> correos = new HashSet<CorreoElectronico>();;
+		Set<TelefonoDTO> telefonos = new HashSet<TelefonoDTO>();
+		Set<DireccionDTO> direcciones = new HashSet<DireccionDTO>();
+		Set<CorreoElectronicoDTO> correos = new HashSet<CorreoElectronicoDTO>();
 		
 		telefonos.add(telefono);
 		telefonos.add(telefono2);
@@ -128,38 +144,38 @@ public class PruebasDeDao {
 		
 	}
 	
-public static void recuperarPersona() {
-	ServicioPersona sPersona = new ServicioPersona();
-	Persona persona = new Persona();
-	
-	persona = sPersona.obtenerPersona(4L);
-	
-	System.out.println("DATOS DE LA PERSONA");
-	System.out.println(persona.getNombre());
-	System.out.println(persona.getApellido());
-	System.out.println(persona.getNroDni().toString());
-	System.out.println(persona.getCodCuil().toString());
-	System.out.println(persona.getCodCuit().toString());
-	System.out.println(persona.getRol());
-	System.out.println("DATOS DE LA TELEFONO");
-	for(Telefono t:persona.getTelefonos() ) {
-		System.out.println(t.getNumero().toString());
-		System.out.println(t.getTipoTelefono());
-	}
-	System.out.println("DATOS DE LA DIRECCIÓN");
-	for(Direccion d:persona.getDirecciones() ) {
-		System.out.println(d.getCalle());
-		System.out.println(d.getNumero().toString());
-		System.out.println(d.getCiudad());
-		System.out.println(d.getPiso().toString());
-		System.out.println(d.getNombreEdificio());
-		System.out.println(d.getEdificio());
-		System.out.println(d.getDepartamentoEdificio());
-	}
-	System.out.println("DATOS DE CORREO ELECTRONICO");
-	for(CorreoElectronico c:persona.getCorreos())  {
-		System.out.println(c.getDireccion());
-	}
-	
-}	
+//public static void recuperarPersona() {
+//	ServicioPersona sPersona = new ServicioPersona();
+//	Persona persona = new Persona();
+//	
+//	persona = sPersona.obtenerPersona(4L);
+//	
+//	System.out.println("DATOS DE LA PERSONA");
+//	System.out.println(persona.getNombre());
+//	System.out.println(persona.getApellido());
+//	System.out.println(persona.getNroDni().toString());
+//	System.out.println(persona.getCodCuil().toString());
+//	System.out.println(persona.getCodCuit().toString());
+//	System.out.println(persona.getRol());
+//	System.out.println("DATOS DE LA TELEFONO");
+//	for(Telefono t:persona.getTelefonos() ) {
+//		System.out.println(t.getNumero().toString());
+//		System.out.println(t.getTipoTelefono());
+//	}
+//	System.out.println("DATOS DE LA DIRECCIÓN");
+//	for(Direccion d:persona.getDirecciones() ) {
+//		System.out.println(d.getCalle());
+//		System.out.println(d.getNumero().toString());
+//		System.out.println(d.getCiudad());
+//		System.out.println(d.getPiso().toString());
+//		System.out.println(d.getNombreEdificio());
+//		System.out.println(d.getEdificio());
+//		System.out.println(d.getDepartamentoEdificio());
+//	}
+//	System.out.println("DATOS DE CORREO ELECTRONICO");
+//	for(CorreoElectronico c:persona.getCorreos())  {
+//		System.out.println(c.getDireccion());
+//	}
+//	
+//}	
 }
