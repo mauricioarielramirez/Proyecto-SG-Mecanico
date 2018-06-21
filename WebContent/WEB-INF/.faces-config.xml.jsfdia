@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
- <PROCESS-ITEM NAME="rules:prueba.xhtml" PATH="prueba.xhtml"
-  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:prueba.xhtml:0" NAME="item"
-   PATH="prueba.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="Welcome::views#bienvenido.xhtml"
-    NAME="output" PATH="views/bienvenido.xhtml"
-    TARGET="rules:views#bienvenido.xhtml" TITLE="Welcome" model-entity="JSFProcessItemOutput"/>
+ <PROCESS-ITEM NAME="rules:#views#prueba.xhtml"
+  PATH="/views/prueba.xhtml" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#views#prueba.xhtml:0" NAME="item"
+   PATH="/views/prueba.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="Welcome::#views#bienvenido.xhtml"
+    NAME="output" PATH="/views/bienvenido.xhtml"
+    TARGET="rules:#views#bienvenido.xhtml" TITLE="Welcome" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:views#bienvenido.xhtml"
-  PATH="views/bienvenido.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:views#altaTrabajos.xhtml"
-  PATH="views/altaTrabajos.xhtml" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:bienvenido.xhtml" PATH="bienvenido.xhtml"
-  SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:bienvenido.xhtml:0" NAME="item"
-   PATH="bienvenido.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="altaTrabajo::views#altaTrabajos.xhtml"
-    NAME="output" PATH="views/altaTrabajos.xhtml"
-    TARGET="rules:views#altaTrabajos.xhtml" TITLE="altaTrabajo" model-entity="JSFProcessItemOutput"/>
+ <PROCESS-ITEM NAME="rules:#views#bienvenido.xhtml"
+  PATH="/views/bienvenido.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#views#bienvenido.xhtml:0" NAME="item"
+   PATH="/views/bienvenido.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="altaTrabajo::#views#altaTrabajos.xhtml"
+    NAME="output" PATH="/views/altaTrabajos.xhtml"
+    TARGET="rules:#views#altaTrabajos.xhtml" TITLE="altaTrabajo" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#views#altaTrabajos.xhtml"
+  PATH="/views/altaTrabajos.xhtml" SHAPE="32,577,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

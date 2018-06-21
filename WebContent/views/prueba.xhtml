@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device.width, initial-scale=1" />
+	<h:outputStylesheet library="css" name="bootstrap.css"></h:outputStylesheet>
+	<title>Primer JSF</title>
+</h:head>
+<h:body>
+	<h1>Bienvenido a JSF!</h1>
+	<h:form>
+
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+
+				<div class="p-3 mb-2 bg-secondary text-white">
+					<h3>Ingreso usuario y password</h3>
+
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="username" class="control-label">Usuario:</label>
+							</div>
+							<div class="col-sm-3">
+								<h:inputText value="#{user.name}" />
+							</div>
+						</div>
+
+
+
+						<div class="row">
+							<div class="col-sm-3">
+								<label for="password" class="control-label">Contraseña:</label>
+							</div>
+							<div class="col-sm-3">
+								<h:inputSecret value="#{user.password}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3"></div>
+						<div class="col-sm-6">
+							<h:commandButton class="btn btn-success btn-block" value="Login"
+								action="#{user.login()}" />
+						</div>
+						<div class="col-sm-3"></div>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+
+	</h:form>
+</h:body>
+</html>
