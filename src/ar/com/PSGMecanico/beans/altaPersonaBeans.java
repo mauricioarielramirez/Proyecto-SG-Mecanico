@@ -10,6 +10,10 @@ import javax.faces.bean.SessionScoped;
 import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
 import ar.com.PSGMecanico.modelo.dominio.persona.Direccion;
 import ar.com.PSGMecanico.modelo.dominio.persona.Telefono;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.CorreoElectronicoDTO;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.DireccionDTO;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.PersonaDTO;
+import ar.com.PSGMecanico.modelo.dominio.persona.dto.TelefonoDTO;
 import ar.com.PSGMecanico.modelo.dominio.persona.Persona;
 import ar.com.PSGMecanico.servicio.ServicioPersona;
 
@@ -49,43 +53,43 @@ public class altaPersonaBeans implements Serializable{
 				System.out.println("EL ERROR");
 			};			
 			//cargamos los datos de persona
-			Persona persona = new Persona();
-			Direccion direccion = new Direccion();
-			Telefono telefono = new Telefono();			
-			CorreoElectronico correoElectronico= new CorreoElectronico();
+			PersonaDTO personaDTO = new PersonaDTO();
+			DireccionDTO direccionDTO = new DireccionDTO();
+			TelefonoDTO telefonoDTO = new TelefonoDTO();			
+			CorreoElectronicoDTO correoElectronicoDTO= new CorreoElectronicoDTO();
 			
-			persona.setNombre(nombre);
-			persona.setApellido(apellido);
-			persona.setNroDni(nroDni);
-			persona.setCodCuil(codCuil);
-			persona.setCodCuit(codCuit);
+			personaDTO.setNombre(nombre);
+			personaDTO.setApellido(apellido);
+			personaDTO.setNroDni(nroDni);
+			personaDTO.setCodCuil(codCuil);
+			personaDTO.setCodCuit(codCuit);
 			
-			direccion.setCalle(direcciones);
-			direccion.setCiudad("Paraná");
-			direccion.setDepartamentoEdificio("0");
-			direccion.setEdificio("0");
-			direccion.setNumero(1236);
-			direccion.setObservaciones("Cuadra ubicada entre Segundo Sombras y Casiano Calderón, tres casas antes de llegar a C.C.");
-			direccion.setPiso(0);
+			direccionDTO.setCalle(direcciones);
+			direccionDTO.setCiudad("Paraná");
+			direccionDTO.setDepartamentoEdificio("0");
+			direccionDTO.setEdificio("0");
+			direccionDTO.setNumero(1236);
+			direccionDTO.setObservaciones("Cuadra ubicada entre Segundo Sombras y Casiano Calderón, tres casas antes de llegar a C.C.");
+			direccionDTO.setPiso(0);
 			
-			telefono.setNumero(telefonos); //El telefono si es long, puede omitir ceros a la izquierda, usar string
-			telefono.setTipoTelefono(Telefono.TELEFONO_FIJO);
+			telefonoDTO.setNumero(telefonos); //El telefono si es long, puede omitir ceros a la izquierda, usar string
+			telefonoDTO.setTipoTelefono(Telefono.TELEFONO_FIJO);
 			
-			correoElectronico.setDireccion(correos);
+			correoElectronicoDTO.setDireccion(correos);
 			
 			//Crear set para dirección, teléfono y correo electrónico
-			Set<Telefono> telefonos = new HashSet<Telefono>();
-			Set<Direccion> direcciones = new HashSet<Direccion>();
-			Set<CorreoElectronico> correos = new HashSet<CorreoElectronico>();;
+			Set<TelefonoDTO> telefonosDTO = new HashSet<TelefonoDTO>();
+			Set<DireccionDTO> direccionesDTO = new HashSet<DireccionDTO>();
+			Set<CorreoElectronicoDTO> correosDTO = new HashSet<CorreoElectronicoDTO>();;
 			
-			telefonos.add(telefono);
-			direcciones.add(direccion);
-			correos.add(correoElectronico);
+			telefonosDTO.add(telefonoDTO);
+			direccionesDTO.add(direccionDTO);
+			correosDTO.add(correoElectronicoDTO);
 			
 			
 			try {
 				//Se realiza el alta y devuelve la regla de navegacion
-				sPersona.agregarPersona(persona, telefonos, direcciones, correos);
+				sPersona.agregarPersona(personaDTO, telefonosDTO, direccionesDTO, correosDTO);
 				result = "Welcome";
 				
 				
