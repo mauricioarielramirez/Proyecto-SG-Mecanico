@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
+import ar.com.PSGMecanico.customException.CustomErrorException;
 import ar.com.PSGMecanico.modelo.dominio.trabajo.Descripcion;
 
 /**
@@ -23,60 +24,60 @@ public class DescripcionHome {
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-	protected SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() throws CustomErrorException {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
-	public void persist(Descripcion transientInstance) {
+	public void persist(Descripcion transientInstance) throws CustomErrorException {
 		log.debug("persisting Descripcion instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachDirty(Descripcion instance) {
+	public void attachDirty(Descripcion instance) throws CustomErrorException {
 		log.debug("attaching dirty Descripcion instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachClean(Descripcion instance) {
+	public void attachClean(Descripcion instance) throws CustomErrorException {
 		log.debug("attaching clean Descripcion instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void delete(Descripcion persistentInstance) {
+	public void delete(Descripcion persistentInstance) throws CustomErrorException {
 		log.debug("deleting Descripcion instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Descripcion merge(Descripcion detachedInstance) {
+	public Descripcion merge(Descripcion detachedInstance) throws CustomErrorException {
 		log.debug("merging Descripcion instance");
 		try {
 			Descripcion result = (Descripcion) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -84,11 +85,11 @@ public class DescripcionHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Descripcion findById(java.lang.Long id) {
+	public Descripcion findById(java.lang.Long id) throws CustomErrorException {
 		log.debug("getting Descripcion instance with id: " + id);
 		try {
 			Descripcion instance = (Descripcion) sessionFactory.getCurrentSession()
@@ -101,11 +102,11 @@ public class DescripcionHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public List findByExample(Descripcion instance) {
+	public List findByExample(Descripcion instance) throws CustomErrorException {
 		log.debug("finding Descripcion instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
@@ -115,7 +116,7 @@ public class DescripcionHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 }

@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
+import ar.com.PSGMecanico.customException.CustomErrorException;
 import ar.com.PSGMecanico.modelo.dominio.pago.PagoParciales;
 
 /**
@@ -23,60 +24,60 @@ public class PagoParcialesHome {
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-	protected SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() throws CustomErrorException {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
-	public void persist(PagoParciales transientInstance) {
+	public void persist(PagoParciales transientInstance) throws CustomErrorException {
 		log.debug("persisting PagoParciales instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachDirty(PagoParciales instance) {
+	public void attachDirty(PagoParciales instance) throws CustomErrorException {
 		log.debug("attaching dirty PagoParciales instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachClean(PagoParciales instance) {
+	public void attachClean(PagoParciales instance) throws CustomErrorException {
 		log.debug("attaching clean PagoParciales instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void delete(PagoParciales persistentInstance) {
+	public void delete(PagoParciales persistentInstance) throws CustomErrorException {
 		log.debug("deleting PagoParciales instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public PagoParciales merge(PagoParciales detachedInstance) {
+	public PagoParciales merge(PagoParciales detachedInstance) throws CustomErrorException {
 		log.debug("merging PagoParciales instance");
 		try {
 			PagoParciales result = (PagoParciales) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -84,11 +85,11 @@ public class PagoParcialesHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public PagoParciales findById(java.lang.Long id) {
+	public PagoParciales findById(java.lang.Long id) throws CustomErrorException {
 		log.debug("getting PagoParciales instance with id: " + id);
 		try {
 			PagoParciales instance = (PagoParciales) sessionFactory.getCurrentSession()
@@ -101,11 +102,11 @@ public class PagoParcialesHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public List findByExample(PagoParciales instance) {
+	public List findByExample(PagoParciales instance) throws CustomErrorException {
 		log.debug("finding PagoParciales instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
@@ -115,7 +116,7 @@ public class PagoParcialesHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 }

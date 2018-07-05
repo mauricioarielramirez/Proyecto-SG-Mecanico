@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
+import ar.com.PSGMecanico.customException.CustomErrorException;
 import ar.com.PSGMecanico.modelo.dominio.trabajo.Dispositivo;
 
 /**
@@ -23,60 +24,60 @@ public class DispositivoHome {
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-	protected SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() throws CustomErrorException {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
-	public void persist(Dispositivo transientInstance) {
+	public void persist(Dispositivo transientInstance) throws CustomErrorException {
 		log.debug("persisting Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachDirty(Dispositivo instance) {
+	public void attachDirty(Dispositivo instance) throws CustomErrorException {
 		log.debug("attaching dirty Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachClean(Dispositivo instance) {
+	public void attachClean(Dispositivo instance) throws CustomErrorException {
 		log.debug("attaching clean Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void delete(Dispositivo persistentInstance) {
+	public void delete(Dispositivo persistentInstance) throws CustomErrorException {
 		log.debug("deleting Dispositivo instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Dispositivo merge(Dispositivo detachedInstance) {
+	public Dispositivo merge(Dispositivo detachedInstance) throws CustomErrorException {
 		log.debug("merging Dispositivo instance");
 		try {
 			Dispositivo result = (Dispositivo) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -84,11 +85,11 @@ public class DispositivoHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Dispositivo findById(java.lang.Long id) {
+	public Dispositivo findById(java.lang.Long id) throws CustomErrorException {
 		log.debug("getting Dispositivo instance with id: " + id);
 		try {
 			Dispositivo instance = (Dispositivo) sessionFactory.getCurrentSession()
@@ -101,11 +102,11 @@ public class DispositivoHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public List findByExample(Dispositivo instance) {
+	public List findByExample(Dispositivo instance) throws CustomErrorException {
 		log.debug("finding Dispositivo instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
@@ -115,7 +116,7 @@ public class DispositivoHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 }

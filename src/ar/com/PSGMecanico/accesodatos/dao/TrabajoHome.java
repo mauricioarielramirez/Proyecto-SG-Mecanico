@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
+import ar.com.PSGMecanico.customException.CustomErrorException;
 import ar.com.PSGMecanico.modelo.dominio.trabajo.Trabajo;
 
 /**
@@ -23,60 +24,60 @@ public class TrabajoHome {
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-	protected SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() throws CustomErrorException {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
-	public void persist(Trabajo transientInstance) {
+	public void persist(Trabajo transientInstance) throws CustomErrorException {
 		log.debug("persisting Trabajo instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachDirty(Trabajo instance) {
+	public void attachDirty(Trabajo instance) throws CustomErrorException {
 		log.debug("attaching dirty Trabajo instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachClean(Trabajo instance) {
+	public void attachClean(Trabajo instance) throws CustomErrorException {
 		log.debug("attaching clean Trabajo instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void delete(Trabajo persistentInstance) {
+	public void delete(Trabajo persistentInstance) throws CustomErrorException {
 		log.debug("deleting Trabajo instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Trabajo merge(Trabajo detachedInstance) {
+	public Trabajo merge(Trabajo detachedInstance) throws CustomErrorException {
 		log.debug("merging Trabajo instance");
 		try {
 			Trabajo result = (Trabajo) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -84,11 +85,11 @@ public class TrabajoHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Trabajo findById(java.lang.Long id) {
+	public Trabajo findById(java.lang.Long id) throws CustomErrorException {
 		log.debug("getting Trabajo instance with id: " + id);
 		try {
 			Trabajo instance = (Trabajo) sessionFactory.getCurrentSession()
@@ -101,11 +102,11 @@ public class TrabajoHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public List findByExample(Trabajo instance) {
+	public List findByExample(Trabajo instance) throws CustomErrorException {
 		log.debug("finding Trabajo instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
@@ -115,7 +116,7 @@ public class TrabajoHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 }

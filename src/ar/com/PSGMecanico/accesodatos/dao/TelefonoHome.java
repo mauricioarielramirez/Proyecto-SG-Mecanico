@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
+import ar.com.PSGMecanico.customException.CustomErrorException;
 import ar.com.PSGMecanico.modelo.dominio.persona.Telefono;
 
 /**
@@ -23,60 +24,60 @@ public class TelefonoHome {
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-	protected SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() throws CustomErrorException {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
-	public void persist(Telefono transientInstance) {
+	public void persist(Telefono transientInstance) throws CustomErrorException{
 		log.debug("persisting Telefono instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachDirty(Telefono instance) {
+	public void attachDirty(Telefono instance) throws CustomErrorException {
 		log.debug("attaching dirty Telefono instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachClean(Telefono instance) {
+	public void attachClean(Telefono instance) throws CustomErrorException {
 		log.debug("attaching clean Telefono instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void delete(Telefono persistentInstance) {
+	public void delete(Telefono persistentInstance) throws CustomErrorException {
 		log.debug("deleting Telefono instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Telefono merge(Telefono detachedInstance) {
+	public Telefono merge(Telefono detachedInstance) throws CustomErrorException {
 		log.debug("merging Telefono instance");
 		try {
 			Telefono result = (Telefono) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -84,11 +85,11 @@ public class TelefonoHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public Telefono findById(java.lang.Long id) {
+	public Telefono findById(java.lang.Long id) throws CustomErrorException {
 		log.debug("getting Telefono instance with id: " + id);
 		try {
 			Telefono instance = (Telefono) sessionFactory.getCurrentSession()
@@ -101,11 +102,11 @@ public class TelefonoHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public List findByExample(Telefono instance) {
+	public List findByExample(Telefono instance) throws CustomErrorException {
 		log.debug("finding Telefono instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
@@ -115,7 +116,7 @@ public class TelefonoHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 }

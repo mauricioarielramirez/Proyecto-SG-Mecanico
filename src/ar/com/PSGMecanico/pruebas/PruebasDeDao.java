@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import ar.com.PSGMecanico.customException.CustomErrorException;
+import ar.com.PSGMecanico.customException.CustomValidationException;
 import ar.com.PSGMecanico.dominio.gestor.GestorTrabajo;
 import ar.com.PSGMecanico.modelo.dominio.persona.Telefono;
 import ar.com.PSGMecanico.modelo.dominio.persona.dto.CorreoElectronicoDTO;
@@ -23,8 +25,19 @@ public class PruebasDeDao {
 	
 	private static void modificarPersona() {
 		//Voy a recuperar una conocida
-		ServicioPersona sPersona = new ServicioPersona();
-		PersonaDTO persona = sPersona.obtenerPersona(1L);
+		ServicioPersona sPersona = null;
+		try {
+			sPersona = new ServicioPersona();
+		} catch (CustomErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PersonaDTO persona = null;
+		try {
+			persona = sPersona.obtenerPersona(1L);
+		} catch (CustomErrorException e) {
+			e.getMessage();
+		}
 		
 		//Modifico el dni y dejo lo otro igual
 		/*persona.setNroDni(39123123L);
@@ -57,7 +70,15 @@ public class PruebasDeDao {
 		persona.setTelefonos(null);
 		persona.setTelefonos(telefonos);
 		
-		sPersona.agregarPersona(persona, persona.getTelefonos(),persona.getDirecciones(), persona.getCorreos());
+		try {
+			sPersona.agregarPersona(persona, persona.getTelefonos(),persona.getDirecciones(), persona.getCorreos());
+		} catch (CustomErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CustomValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -139,8 +160,22 @@ public class PruebasDeDao {
 		correos.add(correoElectronico2);
 		
 		//Instanciamos el servicio
-		ServicioPersona sPersona = new ServicioPersona();
-		sPersona.agregarPersona(persona, telefonos, direcciones, correos);
+		ServicioPersona sPersona = null;
+		try {
+			sPersona = new ServicioPersona();
+		} catch (CustomErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			sPersona.agregarPersona(persona, telefonos, direcciones, correos);
+		} catch (CustomErrorException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		} catch (CustomValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

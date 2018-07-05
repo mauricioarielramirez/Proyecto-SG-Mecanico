@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import ar.com.PSGMecanico.accesodatos.persistencia.HibernateUtil;
+import ar.com.PSGMecanico.customException.CustomErrorException;
 import ar.com.PSGMecanico.modelo.dominio.persona.CorreoElectronico;
 
 /**
@@ -23,61 +24,61 @@ public class CorreoElectronicoHome {
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-	protected SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() throws CustomErrorException {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
-	public void persist(CorreoElectronico transientInstance) {
+	public void persist(CorreoElectronico transientInstance) throws CustomErrorException {
 		log.debug("persisting CorreoElectronico instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void attachDirty(CorreoElectronico instance) {
+	public void attachDirty(CorreoElectronico instance) throws CustomErrorException {
 		log.debug("attaching dirty CorreoElectronico instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
 	@SuppressWarnings("deprecation")
-	public void attachClean(CorreoElectronico instance) {
+	public void attachClean(CorreoElectronico instance) throws CustomErrorException {
 		log.debug("attaching clean CorreoElectronico instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public void delete(CorreoElectronico persistentInstance) {
+	public void delete(CorreoElectronico persistentInstance) throws CustomErrorException {
 		log.debug("deleting CorreoElectronico instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public CorreoElectronico merge(CorreoElectronico detachedInstance) {
+	public CorreoElectronico merge(CorreoElectronico detachedInstance) throws CustomErrorException {
 		log.debug("merging CorreoElectronico instance");
 		try {
 			CorreoElectronico result = (CorreoElectronico) sessionFactory.getCurrentSession().merge(detachedInstance);
@@ -85,11 +86,11 @@ public class CorreoElectronicoHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public CorreoElectronico findById(java.lang.Long id) {
+	public CorreoElectronico findById(java.lang.Long id) throws CustomErrorException {
 		log.debug("getting CorreoElectronico instance with id: " + id);
 		try {
 			CorreoElectronico instance = (CorreoElectronico) sessionFactory.getCurrentSession()
@@ -102,11 +103,11 @@ public class CorreoElectronicoHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 
-	public List findByExample(CorreoElectronico instance) {
+	public List findByExample(CorreoElectronico instance) throws CustomErrorException {
 		log.debug("finding CorreoElectronico instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
@@ -116,7 +117,7 @@ public class CorreoElectronicoHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
-			throw re;
+			throw new CustomErrorException(CustomErrorException.ERROR_DAO,this.getClass().getSimpleName(),re.getStackTrace());
 		}
 	}
 }

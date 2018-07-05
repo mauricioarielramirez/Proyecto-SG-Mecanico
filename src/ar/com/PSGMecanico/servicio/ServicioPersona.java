@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ar.com.PSGMecanico.customException.CustomErrorException;
+import ar.com.PSGMecanico.customException.CustomValidationException;
 import ar.com.PSGMecanico.dominio.gestor.GestorCorreoElectronico;
 import ar.com.PSGMecanico.dominio.gestor.GestorDireccion;
 import ar.com.PSGMecanico.dominio.gestor.GestorPersona;
@@ -47,14 +49,16 @@ public class ServicioPersona {
 	 * El constructor instancia los gestores necesarios para las entidades vinculadas
 	 * a Persona, Direccion, Telefono y CorreoElectronico
 	 */
-	public ServicioPersona() {
+	public ServicioPersona() throws CustomErrorException {
 		try {
 			gPersona = new GestorPersona();
 			gDireccion = new GestorDireccion();
 			gTelefono = new GestorTelefono();
 			gCorreoElectronico = new GestorCorreoElectronico();
-		} catch (Exception e) {
-			System.out.println("Ocurrio un problema: " + e.getMessage());
+		}catch (CustomErrorException cer) {
+			throw cer;
+		}catch (Exception e) {
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
@@ -66,17 +70,17 @@ public class ServicioPersona {
 	 * @param correos Arreglo de objetos CorreoElectronico nuevos o existentes
 	 */
 	public void agregarPersona(PersonaDTO persona, Set<TelefonoDTO> telefonos, Set<DireccionDTO> direcciones,
-			Set<CorreoElectronicoDTO> correos) {
+			Set<CorreoElectronicoDTO> correos) throws CustomErrorException, CustomValidationException {
 		try {
 			// Vemos si tiene lo necesario, sino salimos
 			if (telefonos.size() == 0) {
-				throw new Exception("Se requiere un telefono");
+				throw new CustomValidationException(CustomValidationException.TELEFONO_NECESARIO);
 			}
 			if (direcciones.size() == 0) {
-				throw new Exception("Se requiere una direccion");
+				throw new CustomValidationException(CustomValidationException.DIRECCION_NECESARIA);
 			}
 			if (correos.size() == 0) {
-				throw new Exception("Se requiere un correo electronico");
+				throw new CustomValidationException(CustomValidationException.CORREO_NECESARIO);
 			}
 			//Evaluamos si se trata de un modificacion
 			if (persona.getIdPersona() == null) {
@@ -106,12 +110,9 @@ public class ServicioPersona {
 				modificarPersona(persona, telefonos, direcciones, correos);
 			}
 			
-			
+		} catch(CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-			System.out.println("Ha ocurrido un error");
-			System.out.println("EXCEPCIÓN: "+e.getMessage());
-			System.out.println("STACKTRACE: "+e.getStackTrace());
-			// Borro si falló la inserción, no la modificación
 			if(persona.getIdPersona() == null) {
 				try {
 					for (TelefonoDTO t : telefonos) {
@@ -123,9 +124,10 @@ public class ServicioPersona {
 					for (CorreoElectronicoDTO c : correos) {
 						gCorreoElectronico.delete(Converter.toEntity(c));
 					} 
-				} catch (Exception e2) {
-					System.out.println("Ha ocurrido un error");
-					System.out.println("EXCEPCIÓN: "+e2.getMessage());
+				}catch (CustomErrorException cer) {
+					throw cer;
+				}catch (Exception e2) {
+					throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 				}
 			}
 		}
@@ -137,11 +139,14 @@ public class ServicioPersona {
 	 * @param telefono Objeto teléfono nuevo o existente.
 	 * @return Identificador de Telefono persistente
 	 */
-	private Long persistirTelefono(Telefono telefono) {
+	private Long persistirTelefono(Telefono telefono) throws CustomErrorException {
 		try {
 			gTelefono.add(telefono);
 
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 
 		return telefono.getIdTelefono();
@@ -152,10 +157,13 @@ public class ServicioPersona {
 	 * @param direccion Objeto Direccion nuevo o existente
 	 * @return Identificador de Direccion persistente
 	 */
-	private Long persistirDireccion(Direccion direccion) {
+	private Long persistirDireccion(Direccion direccion) throws CustomErrorException {
 		try {
 			gDireccion.add(direccion);
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 		return direccion.getIdDireccion();
 	}
@@ -165,11 +173,13 @@ public class ServicioPersona {
 	 * @param correo Objeto CorreoElectrónico nuevo o existente
 	 * @return Identificador de CorreoElectronico persistente
 	 */
-	private Long persistirCorreoElectronico(CorreoElectronico correo) {
+	private Long persistirCorreoElectronico(CorreoElectronico correo) throws CustomErrorException {
 		try {
 			gCorreoElectronico.add(correo);
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 		return correo.getIdCorreoElectronico();
 	}
@@ -181,23 +191,14 @@ public class ServicioPersona {
 	 * 
 	 * @param id Identificador de Persona
 	 */
-	public void eliminarPersona(Long id) {
+	public void eliminarPersona(Long id) throws CustomErrorException {
 		try {
 			gPersona.delete(id);
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-			System.out.println("Ocurrio un problema: " + e.getMessage());
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
-	}
-
-	/**
-	 * Agrega una dirección al sistema y la vincula a una persona ya existente
-	 * @param direccion Objeto Dirección nuevo
-	 * @param idPersona Identificador de persona existente
-	 */
-	public void agregarDireccion(Direccion direccion, Long idPersona) {
-
-		// Primero se debe hacer persistente la direccion
-		// Luego se debe vincular la persona con la direccion
 	}
 
 	/**
@@ -205,11 +206,13 @@ public class ServicioPersona {
 	 * 
 	 * @param idDireccion Identificador de dirección existente 
 	 */
-	public void eliminarDireccion(Long idDireccion) {
+	public void eliminarDireccion(Long idDireccion) throws CustomErrorException{
 		try {
 			gDireccion.delete(gDireccion.getById(idDireccion));
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
@@ -219,11 +222,13 @@ public class ServicioPersona {
 	 * @param idTelefono Identificador de telefono existente
 	 * @param idPersona Identificador de persona existente
 	 */
-	public void eliminarTelefono(Long idTelefono) {
+	public void eliminarTelefono(Long idTelefono) throws CustomErrorException {
 		try {
 			gTelefono.delete(gTelefono.getById(idTelefono));
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
@@ -232,11 +237,13 @@ public class ServicioPersona {
 	 * @param idCorreoElectronico Identificador de correo electrónico existente
 	 * @param idPersona Identificador de persona existente
 	 */
-	public void eliminarCorreoElectronico(Long idCorreoElectronico) {
+	public void eliminarCorreoElectronico(Long idCorreoElectronico) throws CustomErrorException {
 		try {
 			gCorreoElectronico.delete(gCorreoElectronico.getById(idCorreoElectronico));
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 	}
 
@@ -246,15 +253,14 @@ public class ServicioPersona {
 	 * @param idPersona Identificador de Persona existente 
 	 * @return Entidad Persona persistente
 	 */
-	public PersonaDTO obtenerPersona(Long idPersona) {
+	public PersonaDTO obtenerPersona(Long idPersona) throws CustomErrorException {
 		PersonaDTO personaDTO = new PersonaDTO();
 		try {
 			personaDTO = Converter.toDto((Persona) gPersona.getById(idPersona)); 
-		
+		} catch (CustomErrorException cer) {
+			throw cer;
 		} catch (Exception e) {
-			System.out.println("Ocurrió un problema");
-			System.out.println("Excepción: " + e.getMessage());
-			System.out.println("StackTrace: " + e.getStackTrace());
+			throw new CustomErrorException(CustomErrorException.ERROR_SERVICIO,this.getClass().getSimpleName(),e.getStackTrace());
 		}
 
 		return personaDTO;
@@ -269,15 +275,15 @@ public class ServicioPersona {
 	 * @throws Exception
 	 */
 	private void modificarPersona(PersonaDTO persona, Set<TelefonoDTO> telefonos, Set<DireccionDTO> direcciones,
-			Set<CorreoElectronicoDTO> correos) throws Exception {
+			Set<CorreoElectronicoDTO> correos) throws CustomValidationException, CustomErrorException, Exception {
 		//Recuperamos la persona
 		//Verificamos cambio de DNI
-		if (persona.getIdPersona() == null) {throw new Exception ("La persona aun no existe en el sistema. No se puede modificar.");}
+		if (persona.getIdPersona() == null) {throw new CustomErrorException(CustomErrorException.ID_INEXISTENTE_PARA_MODIFICAR,this.getClass().getSimpleName());}
 		
 		PersonaDTO personaPersistente = obtenerPersona(persona.getIdPersona());
 		if (!personaPersistente.getNroDni().equals(persona.getNroDni())) {
 			if (gPersona.existePersonaPorDNI(persona.getNroDni())) {
-				throw new Exception("Modificación no permitida: Ya existe el DNI");
+				throw new CustomValidationException(CustomValidationException.DNI_REPETIDO);
 			};
 		}
 		
