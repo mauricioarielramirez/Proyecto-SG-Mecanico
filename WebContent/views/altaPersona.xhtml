@@ -1,22 +1,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
+	
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device.width, initial-scale=1" />
 	<h:outputStylesheet library="css" name="bootstrap.css"></h:outputStylesheet>
+	
+	<!-- Diseño de los dialog modales -->
+	<script type="text/javascript" >
+	function mostrarModal () {
+		var element = document.getElementById("texto");
+		PF(telephoneDialog).show;
+		alert("mensaje");
+		return false;
+		};
+	
+	</script>
+	
+	
 </h:head>
 <h:body>
+		
+
 	<div class="container">
 		<div class="navbar navbar-inverse">
-			<div class="navbar-brand">Alta de cliente!!!</div>
+			<div class="navbar-brand" id="texto">Alta de cliente!!!</div>
 		</div>
 	</div>
+	
+	<ui:include src="/views/dialog/Telefonos.xhtml" />
+
 	<h:form>
+	 
 		<div class="container">
+		
 			<div class="row vertical-offset-100">
 				<div class="col-md-4 col-md-offset-4">
 					<div class="panel panel-default">
@@ -104,12 +128,12 @@
 									<h:inputText class="form-control" placeholder="Direccion"
 										value="#{persona.direcciones}" />
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-12">
-									<h:commandButton class="btn btn-primary" value="Aceptar"
-										action="#{persona.addPersona()}" />
 								</div>
+									<div class="row">
+										<div class="col-12">
+										<h:commandButton class="btn btn-primary" value="Aceptar" action="#{persona.addPersona()}" />
+										<p:commandButton id="showDialog" value="Abrir modal" onclick="mostrarModal();" />
+									</div>
 							</div>
 
 						</div>
@@ -119,5 +143,8 @@
 		</div>
 
 	</h:form>
+	
+	
+	
 </h:body>
-</html>
+</ui:composition>

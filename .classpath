@@ -43,5 +43,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.osgi.core-4.2.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
