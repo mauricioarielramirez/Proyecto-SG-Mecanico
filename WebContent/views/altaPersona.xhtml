@@ -13,16 +13,7 @@
 	<meta name="viewport" content="width=device.width, initial-scale=1" />
 	<h:outputStylesheet library="css" name="bootstrap.css"></h:outputStylesheet>
 	
-	<!-- Diseño de los dialog modales -->
-	<script type="text/javascript" >
-	function mostrarModal () {
-		var element = document.getElementById("texto");
-		PF(telephoneDialog).show;
-		alert("mensaje");
-		return false;
-		};
-	
-	</script>
+
 	
 	
 </h:head>
@@ -35,7 +26,6 @@
 		</div>
 	</div>
 	
-	<ui:include src="/views/dialog/Telefonos.xhtml" />
 
 	<h:form>
 	 
@@ -132,7 +122,7 @@
 									<div class="row">
 										<div class="col-12">
 										<h:commandButton class="btn btn-primary" value="Aceptar" action="#{persona.addPersona()}" />
-										<p:commandButton id="showDialog" value="Abrir modal" onclick="mostrarModal();" />
+										<p:commandButton value="Abrir modal 1" onclick="PF('dlg').show();" />
 									</div>
 							</div>
 
@@ -144,7 +134,18 @@
 
 	</h:form>
 	
-	
+	<p:dialog  widgetVar="dlg" header="Dialog Header" modal="true" width="300" height="100">
+						<div class="form-group row">
+				<div class="col-md-4">
+				<label> Nro de Teléfono: </label>
+				</div>
+				<div class="col-md-8">
+				<h:inputText class="form-control" placeholder="Telefono"
+					value="#{persona.telefonos}" />
+				</div>
+				<p:commandButton value="Close" onclick="PF('dlg').hide();" />
+			</div>
+	</p:dialog>	
 	
 </h:body>
 </ui:composition>
