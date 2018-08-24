@@ -111,14 +111,26 @@
 								</div>
 							
 								<div class="form-group row">
-								<div class="col-md-4">
-									<label> Direccion: </label>
+									<div class="col-md-4">
+										<label> Direccion: </label>
+									</div>
+									<div class="col-md-8">	
+										<h:inputText class="form-control" placeholder="Direccion"
+											value="#{persona.direcciones}" />
+									</div>
 								</div>
-								<div class="col-md-8">	
-									<h:inputText class="form-control" placeholder="Direccion"
-										value="#{persona.direcciones}" />
+								
+								<div class="form-group row">
+									<div class="col-md-4">
+										<label> Telefonos cargados </label>
+									</div>
+									<div class="col-md-8">	
+										<p:selectOneListbox id="listaTelefonos" >
+										
+										</p:selectOneListbox>
+									</div>
 								</div>
-								</div>
+								
 									<div class="row">
 										<div class="col-12">
 										<h:commandButton class="btn btn-primary" value="Aceptar" action="#{persona.addPersona()}" />
@@ -131,10 +143,7 @@
 				</div>
 			</div>
 		</div>
-
-	</h:form>
-	
-	<p:dialog  widgetVar="dlg" header="Dialog Header" modal="true" width="300" height="100">
+	<p:dialog  widgetVar="dlg" header="Dialog Header" modal="true" width="300" height="100" dynamic="false" >
 						<div class="form-group row">
 
 				<div class="col-md-4">
@@ -143,11 +152,20 @@
 				
 				<div class="col-md-8">
 				<h:inputText class="form-control" placeholder="Telefono"
-					value="#{persona.telefonos}" />
+					value="#{telefonoBean.numero}" />
 				</div>
+				<p:commandButton class="btn btn-primary" value="Aceptar" action="#{telefonoBean.agregarTelefono()}" onclick="PF('dlg').hide();"/>
 				<p:commandButton value="Close" onclick="PF('dlg').hide();" />
+				
 			</div>
 	</p:dialog>	
 	
+	</h:form>
+	
+	
+	
 </h:body>
+
+
 </ui:composition>
+

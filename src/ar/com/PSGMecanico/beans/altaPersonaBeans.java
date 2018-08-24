@@ -128,6 +128,7 @@ public class altaPersonaBeans implements Serializable{
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+		System.out.println(nombre);
 	}
 	public String getApellido() {
 		return apellido;

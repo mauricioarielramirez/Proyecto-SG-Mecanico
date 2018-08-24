@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+ <managed-bean>
+  <managed-bean-name>telefonoBean</managed-bean-name>
+  <managed-bean-class>ar.com.PSGMecanico.beans.TelefonoBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+  <managed-property>
+   <property-name>listaTelefonos</property-name>
+   <property-class>java.util.Set</property-class>
+   <value/>
+  </managed-property>
+  <managed-property>
+   <property-name>numero</property-name>
+   <property-class>java.lang.String</property-class>
+   <value/>
+  </managed-property>
+  <managed-property>
+   <property-name>tipoTelefono</property-name>
+   <property-class>java.lang.String</property-class>
+   <value/>
+  </managed-property>
+ </managed-bean>
  <navigation-rule>
   <from-view-id>/views/prueba.xhtml</from-view-id>
   <navigation-case>
@@ -24,6 +44,11 @@
   <navigation-case>
    <from-outcome>Welcome</from-outcome>
    <to-view-id>/views/bienvenido.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <description>Al cerrar cuadro modal de diálogo</description>
+   <from-outcome>ThisPage</from-outcome>
+   <to-view-id>/views/altaPersona.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
  <application/>

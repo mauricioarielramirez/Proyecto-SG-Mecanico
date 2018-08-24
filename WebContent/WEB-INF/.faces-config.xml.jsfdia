@@ -30,6 +30,9 @@
    <PROCESS-ITEM-OUTPUT ID="Welcome::#views#bienvenido.xhtml"
     NAME="output1" PATH="/views/bienvenido.xhtml" SHAPE="-1,16"
     TARGET="rules:#views#bienvenido.xhtml" TITLE="Welcome" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="ThisPage::#views#altaPersona.xhtml"
+    NAME="output2" PATH="/views/altaPersona.xhtml"
+    TARGET="rules:#views#altaPersona.xhtml" TITLE="ThisPage" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
 </PROCESS>
