@@ -21,6 +21,26 @@
    <value/>
   </managed-property>
  </managed-bean>
+ <managed-bean>
+  <managed-bean-name>telefonoSelectOneView</managed-bean-name>
+  <managed-bean-class>ar.com.PSGMecanico.beans.listable.TelefonoSelectOneView</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>telefonoItemConverter</managed-bean-name>
+  <managed-bean-class>ar.com.PSGMecanico.beans.listable.TelefonoItemConverter</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>telefonoItemService</managed-bean-name>
+  <managed-bean-class>ar.com.PSGMecanico.beans.listable.TelefonoItemService</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>telefonoItem</managed-bean-name>
+  <managed-bean-class>ar.com.PSGMecanico.beans.listable.TelefonoItem</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
  <navigation-rule>
   <from-view-id>/views/prueba.xhtml</from-view-id>
   <navigation-case>

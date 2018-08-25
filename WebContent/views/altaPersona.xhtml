@@ -125,9 +125,17 @@
 										<label> Telefonos cargados </label>
 									</div>
 									<div class="col-md-8">	
-										<p:selectOneListbox id="listaTelefonos" >
-										
-										</p:selectOneListbox>
+										 <p:selectOneListbox id="selectTelefono" value="#{telefonoSelectOneView.telefonoItem}" converter="telefonoItemConverter" var="t" filter="true" filterMatchMode="contains">
+								            <f:selectItems value="#{telefonoSelectOneView.telefonos}" var="telefono" itemLabel="#{telefono.numero}" itemValue="#{telefonoItem}" />
+								 
+								            <p:column>
+								                <h:outputText styleClass="ui-theme ui-theme-#{t.numero}" />
+								            </p:column>
+								 
+								            <p:column>
+								                <h:outputText value="#{t.numero}" />
+								            </p:column>
+								        </p:selectOneListbox>
 									</div>
 								</div>
 								
